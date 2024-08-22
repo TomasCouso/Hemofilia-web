@@ -12,20 +12,23 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "evento")
-public class Evento {
+@Table(name = "episodio")
+public class Episodio {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_cliente")
     private Long id;
 
-    @Column(name = "fecha_evento", nullable = false)
+    @Column(name = "fecha_episodio", nullable = false)
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDate fechaEvento;
 
     @Column(name= "episodio_hemorragico", nullable = false)
     private String episodioHemorragico;
+
+    @Column(name = "descripcion_tratamiento", nullable = false)
+    private String descripcionTratamiento;
 
     @ManyToOne
     @JoinColumn(name = "numero_historia_clinica", referencedColumnName = "numero_historia_clinica", insertable = false, updatable = false)
