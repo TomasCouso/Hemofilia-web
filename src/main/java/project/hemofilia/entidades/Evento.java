@@ -1,4 +1,33 @@
 package project.hemofilia.entidades;
 
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.time.LocalDate;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name = "evento")
 public class Evento {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_cliente")
+    private Long id;
+
+    @Column(name = "fecha_evento", nullable = false)
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    private LocalDate fechaEvento;
+
+    @Column(name= "episodio_hemorragico", nullable = false)
+    private String episodioHemorragico;
+
+    @ManyToOne
+    @JoinColumn(name = "numero_historia_clinica", referencedColumnName = "numero_historia_clinica", insertable = false, updatable = false)
+    private HistoriaClinica historiaClinica;
 }
