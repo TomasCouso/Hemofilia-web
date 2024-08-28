@@ -17,7 +17,7 @@ public class Episodio {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_cliente")
+    @Column(name = "id_episodio")
     private Long id;
 
     @Column(name = "fecha_episodio", nullable = false)

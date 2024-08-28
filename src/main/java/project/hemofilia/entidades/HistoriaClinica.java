@@ -32,6 +32,9 @@ public class HistoriaClinica {
     @Column(name = "dni", nullable = false, unique = true)
     private int dni;
 
+    @Column(name = "telefonoDeContacto", nullable = false)
+    private String telefonoDeContacto;
+
     @Column(name = "fecha_nacimiento", nullable = false)
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDate fechaNacimiento;
