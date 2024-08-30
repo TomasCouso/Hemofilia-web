@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import project.hemofilia.entidades.HistoriaClinica;
 import project.hemofilia.repositorios.HistoriaClinicaRepositorio;
 
+import java.util.List;
+
 @Service
 public class HistoriaClinicaServicio {
 
@@ -12,10 +14,24 @@ public class HistoriaClinicaServicio {
     private HistoriaClinicaRepositorio historiaClinicaRepositorio;
 
 
-    public HistoriaClinica getHistoriaClinicaPorId(Long id) {
+    public HistoriaClinica findHistoriaClinicaById(Long id) {
         return historiaClinicaRepositorio.findById(id).orElse(null);
     }
 
 
+    public List<HistoriaClinica> findAll() {
+        return historiaClinicaRepositorio.findAll();
+    }
 
+    public void crearHistoriaClinica(HistoriaClinica historiaClinica) {
+        historiaClinicaRepositorio.save(historiaClinica);
+    }
+
+    public void actualizarHistoriaClinica(HistoriaClinica historiaClinica) {
+        historiaClinicaRepositorio.save(historiaClinica);
+    }
+
+    public void eliminarHistoriaClinica(Long id) {
+        historiaClinicaRepositorio.deleteById(id);
+    }
 }

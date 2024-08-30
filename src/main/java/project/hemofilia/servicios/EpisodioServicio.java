@@ -6,6 +6,7 @@ import project.hemofilia.entidades.Episodio;
 import project.hemofilia.repositorios.EpisodioRepositorio;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EpisodioServicio {
@@ -15,5 +16,17 @@ public class EpisodioServicio {
 
     public List<Episodio> getEpisodiosPorIdHistoriaClinica(Long id) {
         return episodioRepositorio.findByNumeroHistoriaClinica(id);
+    }
+
+    public void crearEpisodio(Episodio episodio) {
+        episodioRepositorio.save(episodio);
+    }
+
+    public Optional<Episodio> findEpisodioPorId(Long episodioId) {
+        return episodioRepositorio.findById(episodioId);
+    }
+
+    public void actualizarEpisodio(Episodio episodio) {
+        episodioRepositorio.save(episodio);
     }
 }

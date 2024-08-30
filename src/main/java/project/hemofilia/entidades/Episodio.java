@@ -30,6 +30,9 @@ public class Episodio {
     @Column(name = "descripcion_tratamiento", nullable = false)
     private String descripcionTratamiento;
 
+    @Column(name= "episodio_en_curso")
+    private Boolean episodioEnCurso;
+
     @ManyToOne
     @JoinColumn(name = "numero_historia_clinica", referencedColumnName = "numero_historia_clinica", insertable = false, updatable = false)
     private HistoriaClinica historiaClinica;

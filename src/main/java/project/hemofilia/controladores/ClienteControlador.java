@@ -19,7 +19,7 @@ public class ClienteControlador {
 
     @GetMapping("/historiaClinica/{id}")
     public String verHistoriaClinica(@PathVariable("id") Long id, Model model) {
-        HistoriaClinica historiaClinica = historiaClinicaServicio.getHistoriaClinicaPorId(id);
+        HistoriaClinica historiaClinica = historiaClinicaServicio.findHistoriaClinicaById(id);
 
         if (historiaClinica != null) {
             model.addAttribute("nombrePaciente", historiaClinica.getNombre());
@@ -35,24 +35,26 @@ public class ClienteControlador {
 
     @GetMapping("/historiaClinica/{id}/info")
     public String verInfoPaciente(@PathVariable("id") Long id, Model model) {
-        HistoriaClinica historiaClinica = historiaClinicaServicio.getHistoriaClinicaPorId(id);
+        HistoriaClinica historiaClinica = historiaClinicaServicio.findHistoriaClinicaById(id);
         if (historiaClinica != null) {
             model.addAttribute("historiaClinica",historiaClinica); //historia
             model.addAttribute("episodios", episodioServicio.getEpisodiosPorIdHistoriaClinica(id)); //lista de episodios
         } else {
+            //configurar error
             return "error/404";
         }
 
-        return "cliente/infoPaciente";
+        return "verHistoriaClinica";
     }
 
-    @GetMapping("/historia-clinica/{id}/urgencia")
+    @GetMapping("/historiaClinica/{id}/urgencia")
     public String verPaginaUrgencia(@PathVariable("id") Long id, Model model) {
-        HistoriaClinica historiaClinica = historiaClinicaServicio.getHistoriaClinicaPorId(id);
+        HistoriaClinica historiaClinica = historiaClinicaServicio.findHistoriaClinicaById(id);
 
         if (historiaClinica != null) {
             model.addAttribute("contactoFamiliar", historiaClinica.getTelefonoDeContacto());
         } else {
+            //configurar error
             return "error/404";
         }
 
