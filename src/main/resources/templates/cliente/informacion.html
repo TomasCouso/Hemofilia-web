@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Información del Paciente</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/informacion.css}">
+    <link rel="icon" th:href="@{/img/favicon.ico}">
+
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1 th:text="'Información del Paciente: ' + ${historiaClinica.nombre} + ' ' + ${historiaClinica.apellido}"></h1>
+    </header>
+
+    <section class="section">
+        <h2>Detalles de la Historia Clínica</h2>
+        <table class="details-table">
+            <tr>
+                <td>Número de Historia Clínica</td>
+                <td th:text="${historiaClinica.numeroHistoriaClinica}"></td>
+            </tr>
+            <tr>
+                <td>DNI</td>
+                <td th:text="${historiaClinica.dni}"></td>
+            </tr>
+            <tr>
+                <td>Teléfono de Contacto</td>
+                <td th:text="${historiaClinica.telefonoDeContacto}"></td>
+            </tr>
+            <tr>
+                <td>Fecha de Nacimiento</td>
+                <td th:text="${#dates.format(historiaClinica.fechaNacimiento, 'dd-MM-yyyy')}"></td>
+            </tr>
+            <tr>
+                <td>Obra Social</td>
+                <td th:text="${historiaClinica.obraSocial}"></td>
+            </tr>
+            <tr>
+                <td>Número de Afiliado</td>
+                <td th:text="${historiaClinica.numeroDeAfiliado}"></td>
+            </tr>
+            <tr>
+                <td>Sexo</td>
+                <td th:text="${historiaClinica.sexo}"></td>
+            </tr>
+            <tr>
+                <td>Edad</td>
+                <td th:text="${T(java.time.Period).between(historiaClinica.fechaNacimiento, T(java.time.LocalDate).now()).getYears()}"></td>
+            </tr>
+            <tr>
+                <td>Fecha de Diagnóstico</td>
+                <td th:text="${#dates.format(historiaClinica.fechaDiagnostico, 'dd-MM-yyyy')}"></td>
+            </tr>
+            <tr>
+                <td>Tipo de Hemofilia</td>
+                <td th:text="${historiaClinica.tipo}"></td>
+            </tr>
+            <tr>
+                <td>Tipo de Tratamiento</td>
+                <td th:text="${historiaClinica.tipoDeTratamiento}"></td>
+            </tr>
+            <tr>
+                <td>Presencia de inhibidor</td>
+                <td th:text="${historiaClinica.inhibidor ? 'Sí' : 'No'}"></td>
+            </tr>
+            <tr>
+                <td>Último Título</td>
+                <td th:text="'<'${historiaClinica.ultimoTitulo}'/ml'"></td>
+            </tr>
+            <tr>
+                <td>Fecha del Último Título</td>
+                <td th:text="${#dates.format(historiaClinica.fechaUltimoTitulo, 'dd-MM-yyyy')}"></td>
+            </tr>
+            <tr>
+                <td>Estrategias Terapéuticas</td>
+                <td th:text="${historiaClinica.estrategiasTrapeuticas}"></td>
+            </tr>
+            <tr>
+                <td>Peso</td>
+                <td th:text="${historiaClinica.peso}'Kg'"></td>
+            </tr>
+            <tr>
+                <td>Dosis</td>
+                <td th:text="${historiaClinica.tipoDeFactor} + ' ' + ${historiaClinica.dosis1} + ' - ' + ${historiaClinica.tipoDeFactor} + ' ' +${historiaClinica.dosis2}"></td>
+            </tr>
+            <tr>
+                <td>Dosis UI/Kg</td>
+                <td th:text="${historiaClinica.dosis1 / historiaClinica.peso} + 'UI/Kg - ' + ${historiaClinica.dosis2 / historiaClinica.peso} + 'UI/Kg'"></td>
+            </tr>
+            <tr>
+                <td>Observaciones</td>
+                <td th:text="${historiaClinica.observaciones}"></td>
+            </tr>
+            <tr>
+                <td>Fecha de historia</td>
+                <td th:text="${historiaClinica.fechaHistoriaClinica}"></td>
+            </tr>
+        </table>
+    </section>
+
+    <section class="section">
+        <h2>Último Evento</h2>
+        <div th:if="${#lists.isEmpty(episodios)}">
+            <p>No hay eventos registrados para este paciente.</p>
+        </div>
+        <div th:if="${!#lists.isEmpty(episodios)}">
+            <p><strong>Fecha:</strong> <span th:text="${#lists.last(episodios).fechaEpisodio}"></span></p>
+            <p><strong>Episodio hemorragico:</strong> <span th:text="${#lists.last(episodios).episodioHemorragico}"></span></p>
+            <p><strong>Descripción del tratamiento:</strong> <span th:text="${#lists.last(episodios).descripcionTratamiento}"></span></p>
+        </div>
+    </section>
+</div>
+
+<footer class="info-centro">
+    <h2>Centro de Hemofilia</h2>
+    <p><strong>Dirección:</strong> Soler 3483, Buenos Aires, CABA</p>
+    <p><strong>Teléfono:</strong> 011 4963-1755</p>
+</footer>
+</body>
+</html>

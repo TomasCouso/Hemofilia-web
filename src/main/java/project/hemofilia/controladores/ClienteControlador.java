@@ -44,7 +44,7 @@ public class ClienteControlador {
             return "error/404";
         }
 
-        return "verHistoriaClinica";
+        return "cliente/informacion";
     }
 
     @GetMapping("/historiaClinica/{id}/urgencia")

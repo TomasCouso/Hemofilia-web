@@ -22,7 +22,7 @@ public class Episodio {
 
     @Column(name = "fecha_episodio", nullable = false)
     @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private LocalDate fechaEvento;
+    private LocalDate fechaEpisodio;
 
     @Column(name= "episodio_hemorragico", nullable = false)
     private String episodioHemorragico;

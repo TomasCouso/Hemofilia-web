@@ -32,6 +32,9 @@ public class HistoriaClinica {
     @Column(name = "dni", nullable = false, unique = true)
     private int dni;
 
+    @Column(name = "sexo", nullable = false)
+    private String sexo;
+
     @Column(name = "telefonoDeContacto", nullable = false)
     private String telefonoDeContacto;
 
@@ -73,8 +76,14 @@ public class HistoriaClinica {
     @Column(name = "peso", nullable = false)
     private int peso;
 
-    @Column(name = "dosis", nullable = false)
-    private int dosis;
+    @Column(name = "tipo_de_factor", nullable = false)
+    private String tipoDeFactor;
+
+    @Column(name = "dosis1", nullable = false)
+    private int dosis1;
+
+    @Column(name = "dosis2", nullable = false)
+    private int dosis2;
 
     // dosis ui/kg = dosis/peso
 

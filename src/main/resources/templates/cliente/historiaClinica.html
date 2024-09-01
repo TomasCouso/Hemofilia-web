@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Historia Clínica</title>
+    <link rel="stylesheet" href="/css/cliente.css">
+</head>
+<body>
+
+<header>
+    <h1>Historia Clínica de <span th:text="${nombrePaciente}"></span></h1>
+</header>
+
+<p>Documento: <span th:text="${documento}"></span></p>
+<p>Número de Historia Clínica: <span th:text="${numeroHistoriaClinica}"></span></p>
+<p style="color:red; font-size:2rem;">PACIENTE HEMOFILICO</p>
+
+<div>
+    <a th:href="@{/historiaClinica/${numeroHistoriaClinica}/info}">
+        <button type="button">Ver Información</button>
+    </a>
+
+    <a th:href="@{/historiaClinica/${numeroHistoriaClinica}/urgencia}">
+        <button type="button">Urgencia</button>
+    </a>
+</div>
+</body>
+</html>
