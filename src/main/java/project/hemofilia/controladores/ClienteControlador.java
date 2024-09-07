@@ -5,11 +5,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import project.hemofilia.entidades.Episodio;
 import project.hemofilia.entidades.HistoriaClinica;
 import project.hemofilia.servicios.EpisodioServicio;
 import project.hemofilia.servicios.HistoriaClinicaServicio;
 
+import java.util.List;
+
 @Controller
+@RequestMapping("/cliente")
 public class ClienteControlador {
 
     @Autowired
@@ -22,9 +27,7 @@ public class ClienteControlador {
         HistoriaClinica historiaClinica = historiaClinicaServicio.findHistoriaClinicaById(id);
 
         if (historiaClinica != null) {
-            model.addAttribute("nombrePaciente", historiaClinica.getNombre());
-            model.addAttribute("documento", historiaClinica.getDni());
-            model.addAttribute("numeroHistoriaClinica", historiaClinica.getNumeroHistoriaClinica());
+            model.addAttribute("historiaClinica", historiaClinica);
         } else {
             //configurar error
             return "error/404";
@@ -37,8 +40,12 @@ public class ClienteControlador {
     public String verInfoPaciente(@PathVariable("id") Long id, Model model) {
         HistoriaClinica historiaClinica = historiaClinicaServicio.findHistoriaClinicaById(id);
         if (historiaClinica != null) {
-            model.addAttribute("historiaClinica",historiaClinica); //historia
-            model.addAttribute("episodios", episodioServicio.getEpisodiosPorIdHistoriaClinica(id)); //lista de episodios
+            model.addAttribute("historiaClinica", historiaClinica); //historia
+            List<Episodio> episodios = episodioServicio.findAll(); // Obtener la lista de episodios
+            Episodio ultimoEpisodio = episodios.isEmpty() ? null : episodios.get(episodios.size() - 1);
+            model.addAttribute("episodios", episodios);
+            model.addAttribute("ultimoEpisodio", ultimoEpisodio);
+
         } else {
             //configurar error
             return "error/404";
@@ -60,7 +67,6 @@ public class ClienteControlador {
 
         return "cliente/urgencia";
     }
-
 
 
 }

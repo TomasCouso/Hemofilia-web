@@ -3,24 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <title>Historia Clínica</title>
-    <link rel="stylesheet" href="/css/cliente.css">
+    <link rel="stylesheet" th:href="@{/css/historiaClinica.css}">
+    <link rel="icon" th:href="@{/img/favicon.ico}">
 </head>
 <body>
 
 <header>
-    <h1>Historia Clínica de <span th:text="${nombrePaciente}"></span></h1>
+    <h1>Historia Clínica de <span th:text="${historiaClinica.nombre}"></span></h1>
 </header>
 
-<p>Documento: <span th:text="${documento}"></span></p>
-<p>Número de Historia Clínica: <span th:text="${numeroHistoriaClinica}"></span></p>
+<p>Documento: <span th:text="${historiaClinica.dni}"></span></p>
+<p>Número de Historia Clínica: <span th:text="${historiaClinica.numeroHistoriaClinica}"></span></p>
 <p style="color:red; font-size:2rem;">PACIENTE HEMOFILICO</p>
 
 <div>
-    <a th:href="@{/historiaClinica/${numeroHistoriaClinica}/info}">
+    <a th:href="@{/cliente/historiaClinica/{numeroHistoriaClinica}/info(numeroHistoriaClinica=${historiaClinica.numeroHistoriaClinica})}">
         <button type="button">Ver Información</button>
     </a>
 
-    <a th:href="@{/historiaClinica/${numeroHistoriaClinica}/urgencia}">
+    <a th:href="@{/cliente/historiaClinica/{numeroHistoriaClinica}/urgencia(numeroHistoriaClinica=${historiaClinica.numeroHistoriaClinica})}">
         <button type="button">Urgencia</button>
     </a>
 </div>

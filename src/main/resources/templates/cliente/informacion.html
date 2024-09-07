@@ -30,7 +30,7 @@
             </tr>
             <tr>
                 <td>Fecha de Nacimiento</td>
-                <td th:text="${#dates.format(historiaClinica.fechaNacimiento, 'dd-MM-yyyy')}"></td>
+                <td th:text="${historiaClinica.fechaNacimiento}"></td>
             </tr>
             <tr>
                 <td>Obra Social</td>
@@ -50,7 +50,7 @@
             </tr>
             <tr>
                 <td>Fecha de Diagnóstico</td>
-                <td th:text="${#dates.format(historiaClinica.fechaDiagnostico, 'dd-MM-yyyy')}"></td>
+                <td th:text="${historiaClinica.fechaDiagnostico}"></td>
             </tr>
             <tr>
                 <td>Tipo de Hemofilia</td>
@@ -66,11 +66,11 @@
             </tr>
             <tr>
                 <td>Último Título</td>
-                <td th:text="'<'${historiaClinica.ultimoTitulo}'/ml'"></td>
+                <td th:text="'<' + ${historiaClinica.ultimoTitulo} + '/ml'"></td>
             </tr>
             <tr>
                 <td>Fecha del Último Título</td>
-                <td th:text="${#dates.format(historiaClinica.fechaUltimoTitulo, 'dd-MM-yyyy')}"></td>
+                <td th:text="${historiaClinica.fechaUltimoTitulo}"></td>
             </tr>
             <tr>
                 <td>Estrategias Terapéuticas</td>
@@ -78,11 +78,11 @@
             </tr>
             <tr>
                 <td>Peso</td>
-                <td th:text="${historiaClinica.peso}'Kg'"></td>
+                <td th:text="${historiaClinica.peso} + 'Kg'"></td>
             </tr>
             <tr>
                 <td>Dosis</td>
-                <td th:text="${historiaClinica.tipoDeFactor} + ' ' + ${historiaClinica.dosis1} + ' - ' + ${historiaClinica.tipoDeFactor} + ' ' +${historiaClinica.dosis2}"></td>
+                <td th:text="${historiaClinica.tipoDeFactor} + ' ' + ${historiaClinica.dosis1} + ' - ' + ${historiaClinica.tipoDeFactor} + ' ' + ${historiaClinica.dosis2}"></td>
             </tr>
             <tr>
                 <td>Dosis UI/Kg</td>
@@ -101,13 +101,13 @@
 
     <section class="section">
         <h2>Último Evento</h2>
-        <div th:if="${#lists.isEmpty(episodios)}">
+        <div th:if="${episodios.isEmpty()}">
             <p>No hay eventos registrados para este paciente.</p>
         </div>
-        <div th:if="${!#lists.isEmpty(episodios)}">
-            <p><strong>Fecha:</strong> <span th:text="${#lists.last(episodios).fechaEpisodio}"></span></p>
-            <p><strong>Episodio hemorragico:</strong> <span th:text="${#lists.last(episodios).episodioHemorragico}"></span></p>
-            <p><strong>Descripción del tratamiento:</strong> <span th:text="${#lists.last(episodios).descripcionTratamiento}"></span></p>
+        <div th:if="${!episodios.isEmpty()}">
+            <p><strong>Fecha:</strong> <span th:text="${ultimoEpisodio.fechaEpisodio}"></span></p>
+            <p><strong>Episodio hemorragico:</strong> <span th:text="${ultimoEpisodio.episodioHemorragico}"></span></p>
+            <p><strong>Descripción del tratamiento:</strong> <span th:text="${ultimoEpisodio.descripcionTratamiento}"></span></p>
         </div>
     </section>
 </div>

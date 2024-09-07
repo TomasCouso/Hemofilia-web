@@ -29,4 +29,8 @@ public class EpisodioServicio {
     public void actualizarEpisodio(Episodio episodio) {
         episodioRepositorio.save(episodio);
     }
+
+    public List<Episodio> findAll() {
+        return episodioRepositorio.findAll();
+    }
 }
