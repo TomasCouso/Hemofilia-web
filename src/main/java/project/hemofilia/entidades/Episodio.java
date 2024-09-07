@@ -8,6 +8,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
+//Inserción de datos de ejemplo en la tabla Episodio
+//INSERT INTO episodio (fecha_episodio, episodio_hemorragico, descripcion_tratamiento, episodio_en_curso, numero_historia_clinica)
+//VALUES ('2023-07-01', 'Hemorragia leve', 'Aplicación de factor VIII', false, 1001);
+
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

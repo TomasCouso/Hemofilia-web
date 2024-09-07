@@ -5,6 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+//Inserción de datos de ejemplo en la tabla Usuario
+//INSERT INTO usuario (nombre, correo, password, id_rol) VALUES
+//('Juan Pérez', 'juan@example.com', 'password123', 1),
+// ('Ana Gómez', 'ana@example.com', 'password456', 2);
+
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -27,6 +33,6 @@ public class Usuario {
     private String password;
 
     @OneToOne
-    @JoinColumn(name = "nombre_rol", referencedColumnName = "nombre", nullable = false)
+    @JoinColumn(name = "id_rol", referencedColumnName = "id", nullable = false)
     private Rol rol;
 }
