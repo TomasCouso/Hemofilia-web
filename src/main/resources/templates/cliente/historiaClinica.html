@@ -3,27 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <title>Historia Clínica</title>
-    <link rel="stylesheet" th:href="@{/css/historiaClinica.css}">
+    <!-- Incluir Tailwind CSS desde CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="icon" th:href="@{/img/favicon.ico}">
+    <style>
+        html, body {
+            height: 100%;
+        }
+    </style>
 </head>
-<body>
+<body class="flex flex-col min-h-screen bg-gray-100 text-gray-800">
 
-<header>
-    <h1>Historia Clínica de <span th:text="${historiaClinica.nombre}"></span></h1>
+<!-- Encabezado: ocupando el ancho completo -->
+<header class="bg-blue-500 text-white py-5 w-full fixed top-0 left-0 z-10">
+    <h1 class="text-5xl font-bold text-center">Historia Clínica de <span th:text="${historiaClinica.nombre}"></span></h1>
 </header>
 
-<p>Documento: <span th:text="${historiaClinica.dni}"></span></p>
-<p>Número de Historia Clínica: <span th:text="${historiaClinica.numeroHistoriaClinica}"></span></p>
-<p style="color:red; font-size:2rem;">PACIENTE HEMOFILICO</p>
+<!-- Contenido principal: desplazado hacia abajo para evitar estar debajo del header -->
+<main class="flex-grow pt-48 px-4 text-center">
+    <!-- Información del paciente -->
+    <p class="text-5xl mb-5">Documento: <span th:text="${historiaClinica.dni}"></span></p>
+    <p class="text-5xl mb-5">Número de Historia Clínica: <span th:text="${historiaClinica.numeroHistoriaClinica}"></span></p>
+    <p class="text-red-500 text-7xl font-bold mb-20">PACIENTE HEMOFILICO</p>
 
-<div>
-    <a th:href="@{/cliente/historiaClinica/{numeroHistoriaClinica}/info(numeroHistoriaClinica=${historiaClinica.numeroHistoriaClinica})}">
-        <button type="button">Ver Información</button>
-    </a>
+    <!-- Botones de ancho completo en una fila -->
+    <div class="flex gap-4 mt-60">
+        <a th:href="@{/cliente/historiaClinica/{numeroHistoriaClinica}/info(numeroHistoriaClinica=${historiaClinica.numeroHistoriaClinica})}" class="flex-1">
+            <button type="button" class="bg-blue-500 hover:bg-blue-700 text-white py-4 text-7xl rounded-lg w-full h-96">Información</button>
+        </a>
 
-    <a th:href="@{/cliente/historiaClinica/{numeroHistoriaClinica}/urgencia(numeroHistoriaClinica=${historiaClinica.numeroHistoriaClinica})}">
-        <button type="button">Urgencia</button>
-    </a>
-</div>
+        <a th:href="@{/cliente/historiaClinica/{numeroHistoriaClinica}/urgencia(numeroHistoriaClinica=${historiaClinica.numeroHistoriaClinica})}" class="flex-1">
+            <button type="button" class="bg-red-500 hover:bg-red-700 text-white py-4 text-7xl rounded-lg w-full h-96">Urgencia</button>
+        </a>
+    </div>
+</main>
+
+<!-- Footer fijo en la parte inferior de la pantalla -->
+<footer class="bg-blue-500 text-white text-center py-6 fixed bottom-0 left-0 w-full">
+    <h2 class="text-2xl font-bold mb-2">Centro de Hemofilia</h2>
+    <p class="text-lg"><strong>Dirección:</strong> Soler 3483, Buenos Aires, CABA</p>
+    <p class="text-lg"><strong>Teléfono:</strong> 011 4963-1755</p>
+</footer>
+
 </body>
 </html>

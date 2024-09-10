@@ -3,21 +3,47 @@
 <head>
     <title>Urgencia - Hemofilia</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" th:href="@{/css/urgencia.css}">
+    <!-- Incluir Tailwind CSS desde CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="icon" th:href="@{/img/favicon.ico}">
+    <style>
+        html, body {
+            height: 100%;
+        }
+    </style>
 </head>
-<body>
-<div class="container">
-    <div class="alert-message">
-        <p>Si hay hemorragia, hay que frenarla</p>
-    </div>
-    <a th:href="|tel:${contactoFamiliar}|" class="btn btn-contacto">Llamar a Contacto Familiar</a>
-    <a href="tel:911" class="btn btn-urgencia">Llamar al 911</a>
-</div>
+<body class="flex flex-col min-h-screen bg-gray-100 text-gray-800">
 
-<footer class="info-centro">
-    <h2>Centro de Hemofilia</h2>
-    <p><strong>Dirección:</strong> Soler 3483, Buenos Aires, CABA</p>
-    <p><strong>Teléfono:</strong> 011 4963-1755</p>
+<main class="flex-grow pt-24 px-4 text-center">
+    <div class="container mx-auto">
+        <!-- Mensaje de alerta -->
+        <div class="bg-red-500 text-white text-2xl font-semibold py-4 px-6 mb-16 rounded-lg w-3/4 mx-auto">
+            <p>Si hay hemorragia, hay que frenarla</p>
+        </div>
+
+        <!-- Botones en una fila -->
+        <div class="flex gap-4">
+            <a th:href="|tel:${contactoFamiliar}|" class="flex-1">
+                <button type="button"
+                        class="bg-blue-500 hover:bg-blue-700 text-white py-4 text-2xl rounded-lg w-full h-48">
+                    Llamar a Contacto Familiar
+                </button>
+            </a>
+            <a href="tel:911" class="flex-1">
+                <button type="button"
+                        class="bg-red-500 hover:bg-red-700 text-white py-4 text-3xl rounded-lg w-full h-48">
+                    Llamar al 911
+                </button>
+            </a>
+        </div>
+    </div>
+</main>
+<!-- Footer -->
+<footer class="bg-gray-200 text-gray-800 text-center py-4 mt-8 fixed bottom-0 left-0 w-full">
+    <h2 class="text-xl font-semibold mb-2">Centro de Hemofilia</h2>
+    <p class="text-base"><strong>Dirección:</strong> Soler 3483, Buenos Aires, CABA</p>
+    <p class="text-base"><strong>Teléfono:</strong> 011 4963-1755</p>
 </footer>
+
 </body>
+</html>
