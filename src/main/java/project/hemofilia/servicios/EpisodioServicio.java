@@ -14,7 +14,7 @@ public class EpisodioServicio {
     @Autowired
     private EpisodioRepositorio episodioRepositorio;
 
-    public List<Episodio> getEpisodiosPorIdHistoriaClinica(Long id) {
+    public List<Episodio> findEpisodiosPorIdHistoriaClinica(Long id) {
         return episodioRepositorio.findByNumeroHistoriaClinica(id);
     }
 
@@ -32,5 +32,13 @@ public class EpisodioServicio {
 
     public List<Episodio> findAll() {
         return episodioRepositorio.findAll();
+    }
+
+    public void eliminarEpisodio(Long idEpisodio) {
+        episodioRepositorio.deleteById(idEpisodio);
+    }
+
+    public void eliminarEpisodiosPorHistoriaClinica(Long id) {
+        episodioRepositorio.deleteByNumeroHistoriaClinica(id);
     }
 }

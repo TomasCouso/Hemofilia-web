@@ -15,4 +15,5 @@ public interface EpisodioRepositorio extends JpaRepository<Episodio, Long> {
     @Query("SELECT e FROM Episodio e WHERE e.historiaClinica.numeroHistoriaClinica = :numeroHistoriaClinica")
     List<Episodio> findByNumeroHistoriaClinica(@Param("numeroHistoriaClinica") Long numeroHistoriaClinica);
 
+    void deleteByNumeroHistoriaClinica(Long id);
 }

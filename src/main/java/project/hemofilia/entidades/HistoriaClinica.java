@@ -53,7 +53,7 @@ public class HistoriaClinica {
     private String obraSocial;
 
     @Column(name = "numero_de_afiliado")
-    private Long numeroDeAfiliado;
+    private String numeroDeAfiliado;
 
     @Column(name = "fecha_diagnostico")
     @DateTimeFormat(pattern = "dd-MM-yyyy")

@@ -12,6 +12,8 @@ public class HistoriaClinicaServicio {
 
     @Autowired
     private HistoriaClinicaRepositorio historiaClinicaRepositorio;
+    @Autowired
+    private EpisodioServicio episodioServicio;
 
 
     public HistoriaClinica findHistoriaClinicaById(Long id) {
@@ -32,6 +34,7 @@ public class HistoriaClinicaServicio {
     }
 
     public void eliminarHistoriaClinica(Long id) {
+        episodioServicio.eliminarEpisodiosPorHistoriaClinica(id);
         historiaClinicaRepositorio.deleteById(id);
     }
 }

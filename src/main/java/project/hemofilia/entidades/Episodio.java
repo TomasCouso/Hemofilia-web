@@ -38,7 +38,12 @@ public class Episodio {
     @Column(name= "episodio_en_curso")
     private Boolean episodioEnCurso;
 
+    // Relación ManyToOne para asociar con HistoriaClinica
     @ManyToOne
-    @JoinColumn(name = "numero_historia_clinica", referencedColumnName = "numero_historia_clinica", insertable = false, updatable = false)
+    @JoinColumn(name = "numero_historia_clinica", referencedColumnName = "numero_historia_clinica")
     private HistoriaClinica historiaClinica;
+
+    // Campo referenciado por la relación, pero no insertable ni actualizable
+    @Column(name = "numero_historia_clinica", insertable = false, updatable = false)
+    private Long numeroHistoriaClinica;
 }
