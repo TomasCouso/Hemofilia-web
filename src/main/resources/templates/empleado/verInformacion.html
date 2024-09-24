@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalle de Historia Clínica</title>
+    <!-- Incluir Tailwind CSS desde CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="icon" th:href="@{/img/favicon.ico}">
+    <style>
+        html, body {
+            height: 100%;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+<!-- Encabezado: ocupando el ancho completo -->
+<header class="bg-blue-500 text-white py-5 w-full">
+    <h1 class="text-4xl font-bold text-center">Historia Clínica de <span th:text="${historiaClinica.nombre}"></span>
+        <span th:text="${historiaClinica.apellido}"></span></h1>
+</header>
+
+<!-- Contenido principal -->
+<main class="container mx-auto mt-10 px-4">
+    <!-- Información de la historia clínica en 3 columnas -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Columna 1: Datos Personales -->
+        <div>
+            <h2 class="text-xl font-bold mb-2">Datos Personales</h2>
+            <p><strong>Documento:</strong> <span th:text="${historiaClinica.dni}"></span></p>
+            <p><strong>N° Historia Clínica:</strong> <span th:text="${historiaClinica.numeroHistoriaClinica}"></span>
+            </p>
+            <p><strong>Edad:</strong> <span
+                    th:text="${T(java.time.Period).between(historiaClinica.fechaNacimiento, T(java.time.LocalDate).now()).getYears()}"></span>
+            </p>
+            <p><strong>Fecha de Nacimiento:</strong> <span th:text="${historiaClinica.fechaNacimiento}"></span></p>
+            <p><strong>Sexo:</strong> <span th:text="${historiaClinica.sexo}"></span></p>
+            <p><strong>Teléfono de Contacto:</strong> <span th:text="${historiaClinica.telefonoDeContacto}"></span></p>
+        </div>
+
+        <!-- Columna 2: Diagnóstico y Tratamiento -->
+        <div>
+            <h2 class="text-xl font-bold mb-2">Diagnóstico y Tratamiento</h2>
+            <p><strong>Obra Social:</strong> <span th:text="${historiaClinica.obraSocial}"></span></p>
+            <p><strong>Número de Afiliado:</strong> <span th:text="${historiaClinica.numeroDeAfiliado}"></span></p>
+            <p><strong>Fecha de Diagnóstico:</strong> <span th:text="${historiaClinica.fechaDiagnostico}"></span></p>
+            <p><strong>Tipo:</strong> <span th:text="${historiaClinica.tipo}"></span></p>
+            <p><strong>Tipo de Tratamiento:</strong> <span th:text="${historiaClinica.tipoDeTratamiento}"></span></p>
+            <p><strong>Inhibidor:</strong> <span th:text="${historiaClinica.inhibidor ? 'Sí' : 'No'}"></span></p>
+        </div>
+
+        <!-- Columna 3: Datos Médicos -->
+        <div>
+            <h2 class="text-xl font-bold mb-2">Datos Médicos</h2>
+            <p><strong>Último Título:</strong> <span th:text="'<' + ${historiaClinica.ultimoTitulo} + ' UB/ml'"></span>
+            </p>
+            <p><strong>Fecha del Último Título:</strong> <span th:text="${historiaClinica.fechaUltimoTitulo}"></span>
+            </p>
+            <p><strong>Peso:</strong> <span th:text="${historiaClinica.peso} + 'Kg'"></span></p>
+            <p><strong>Dosis:</strong> <span
+                    th:text="${historiaClinica.tipoDeFactor} + ' ' + ${historiaClinica.dosis1} + ' - ' + ${historiaClinica.tipoDeFactor} + ' ' + ${historiaClinica.dosis2}"></span>
+            </p>
+            <p><strong>Dosis UI/Kg:</strong> <span
+                    th:text="${historiaClinica.dosis1 / historiaClinica.peso} + 'UI/Kg - ' + ${historiaClinica.dosis2 / historiaClinica.peso} + 'UI/Kg'"></span>
+            </p>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Estrategias terapéuticas -->
+        <div class="mt-6">
+            <h2 class="text-xl font-bold mb-2">Estrategias Terapéuticas</h2>
+            <p th:text="${historiaClinica.estrategiasTrapeuticas}"></p>
+        </div>
+        <!-- Observaciones adicionales -->
+        <div class="mt-6">
+            <h2 class="text-xl font-bold mb-2">Observaciones</h2>
+            <p th:text="${historiaClinica.observaciones}"></p>
+        </div>
+
+
+    </div>
+
+    <!-- Tabla de Episodios -->
+    <div class="mt-8">
+
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-xl font-bold mb-4">Episodios Asociados</h2>
+
+            <!-- Botón al lado derecho -->
+            <a th:href="@{/empleado/historiaClinica/{historiaClinicaId}/episodio/nuevo(historiaClinicaId=${historiaClinica.numeroHistoriaClinica})}"
+               class="bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded-lg">
+                Asociar un episodio nuevo
+            </a>
+        </div>
+
+        <div th:if="${episodios != null && !episodios.isEmpty()}">
+            <table class="table-auto w-full border-collapse border border-gray-300">
+                <thead class="bg-gray-100">
+                <tr>
+                    <th class="border border-gray-300 px-4 py-2">Fecha del Episodio</th>
+                    <th class="border border-gray-300 px-4 py-2">Episodio Hemorrágico</th>
+                    <th class="border border-gray-300 px-4 py-2">Descripción del Tratamiento</th>
+                    <th class="border border-gray-300 px-4 py-2">Episodio en Curso</th>
+                    <th class="border border-gray-300 px-4 py-2">Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="episodio : ${episodios}">
+                    <td class="border border-gray-300 px-4 py-2 text-center" th:text="${episodio.fechaEpisodio}"></td>
+                    <td class="border border-gray-300 px-4 py-2 text-center"
+                        th:text="${episodio.episodioHemorragico}"></td>
+                    <td class="border border-gray-300 px-4 py-2 text-center"
+                        th:text="${episodio.descripcionTratamiento}"></td>
+                    <td class="border border-gray-300 px-4 py-2 text-center"
+                        th:text="${episodio.episodioEnCurso ? 'Sí' : 'No'}"></td>
+                    <td class="border border-gray-300 px-4 py-2 gap-2 text-center">
+                        <a th:href="@{/empleado/historiaClinica/{historiaClinicaId}/episodio/editar/{episodioId}(historiaClinicaId=${historiaClinica.numeroHistoriaClinica}, episodioId=${episodio.id})}">
+                            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                Editar
+                            </button>
+                        </a>
+                        <a th:href="@{/empleado/historiaClinica/{historiaClinicaId}/episodio/eliminar/{episodioId}(historiaClinicaId=${historiaClinica.numeroHistoriaClinica}, episodioId=${episodio.id})}">
+                            <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                                Eliminar
+                            </button>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Mensaje si no hay episodios -->
+        <div th:if="${episodios == null || episodios.isEmpty()}" class="text-gray-600">
+            No hay episodios asociados a esta historia clínica.
+        </div>
+
+        <div class="mt-8 text-right">
+            <a th:href="@{/empleado/historiaClinica/eliminar/{id}(id=${historiaClinica.numeroHistoriaClinica})}"
+               onclick="return confirm('¿Estás seguro de eliminar esta Historia Clínica?');">
+                <button type="button" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-6 rounded-lg">
+                    Eliminar Historia Clínica
+                </button>
+            </a>
+        </div>
+
+    </div>
+</main>
+</body>
+</html>

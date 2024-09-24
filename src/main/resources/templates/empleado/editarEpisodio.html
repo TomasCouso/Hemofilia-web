@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Episodio</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="icon" th:href="@{/img/favicon.ico}">
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col">
+
+<!-- Encabezado -->
+<header class="bg-blue-500 text-white py-4">
+    <h1 class="text-3xl font-bold text-center">Editar Episodio</h1>
+</header>
+
+<!-- Contenido principal -->
+<main class="flex-grow container mx-auto p-6">
+    <form th:action="@{/empleado/historiaClinica/{historiaClinicaId}/episodio/editar/{episodioId}(historiaClinicaId=${historiaClinicaId}, episodioId=${episodioId})}" th:object="${episodio}" method="post" class="bg-white p-8 shadow-md rounded-lg max-w-3xl mx-auto">
+
+        <!-- Fecha del episodio -->
+        <div class="mb-4">
+            <label for="fechaEpisodio" class="block text-lg font-medium text-gray-700">Fecha del Episodio</label>
+            <input type="date" id="fechaEpisodio" name="fechaEpisodio" th:value="*{fechaEpisodio}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+        </div>
+
+        <!-- Episodio Hemorrágico -->
+        <div class="mb-4">
+            <label for="episodioHemorragico" class="block text-lg font-medium text-gray-700">Episodio Hemorrágico</label>
+            <input type="text" id="episodioHemorragico" name="episodioHemorragico" th:field="*{episodioHemorragico}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
+        </div>
+
+        <!-- Descripción del Tratamiento -->
+        <div class="mb-4">
+            <label for="descripcionTratamiento" class="block text-lg font-medium text-gray-700">Descripción del Tratamiento</label>
+            <textarea id="descripcionTratamiento" name="descripcionTratamiento" th:field="*{descripcionTratamiento}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" rows="4" required></textarea>
+        </div>
+
+        <!-- Episodio en curso -->
+        <div class="mb-4">
+            <label class="block text-lg font-medium text-gray-700">¿Episodio en curso?</label>
+            <div class="mt-2">
+                <label class="inline-flex items-center">
+                    <input type="radio" name="episodioEnCurso" value="true" th:field="*{episodioEnCurso}" th:checked="*{episodioEnCurso == true}" class="form-radio text-blue-500" required>
+                    <span class="ml-2">Sí</span>
+                </label>
+                <label class="inline-flex items-center ml-6">
+                    <input type="radio" name="episodioEnCurso" value="false" th:field="*{episodioEnCurso}" th:checked="*{episodioEnCurso == false}" class="form-radio text-blue-500">
+                    <span class="ml-2">No</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Botones -->
+        <div class="mt-6 flex justify-between">
+            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">Guardar Cambios</button>
+        </div>
+    </form>
+</main>
+
+</body>
+</html>
