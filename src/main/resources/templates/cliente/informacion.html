@@ -4,143 +4,171 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Información del Paciente</title>
-    <!-- Incluir Tailwind CSS desde CDN -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="icon" th:href="@{/img/favicon.ico}">
+    <style>
+        html, body {
+            height: 100%;
+        }
+    </style>
 </head>
-<body class="font-sans bg-gray-100 text-gray-800">
+<body class="flex flex-col min-h-screen bg-gray-100 text-gray-800">
 
-<!-- Contenedor principal -->
-<div class="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg">
-    <!-- Encabezado -->
-    <header class="mb-8">
-        <h1 class="text-3xl font-bold text-gray-900"
-            th:text="'Información del Paciente: ' + ${historiaClinica.nombre} + ' ' + ${historiaClinica.apellido}"></h1>
-    </header>
+<header class="bg-blue-500 text-white py-2 w-full top-0 left-0 z-10 flex items-center justify-center">
+    <a th:href="@{/cliente/historiaClinica/{id}(id=${id})}" class="flex items-center">
+        <img th:src="@{/img/logo-hemo.png}" alt="Logo" class="h-11 max-w-full w-auto">
+    </a>
+</header>
 
-    <!-- Sección de detalles -->
-    <section class="mb-8">
-        <h2 class="text-2xl font-semibold text-gray-900 mb-4">Detalles de la Historia Clínica</h2>
-        <table class="w-full border-collapse">
-            <tbody>
-            <tr class="bg-gray-100 border-b">
-                <td class="font-semibold p-4">Número de Historia Clínica</td>
-                <td class="p-4" th:text="${historiaClinica.numeroHistoriaClinica}"></td>
-            </tr>
-            <tr class="border-b">
-                <td class="font-semibold p-4">DNI</td>
-                <td class="p-4" th:text="${historiaClinica.dni}"></td>
-            </tr>
-            <tr class="bg-gray-100 border-b">
-                <td class="font-semibold p-4">Teléfono de Contacto</td>
-                <td class="p-4" th:text="${historiaClinica.telefonoDeContacto}"></td>
-            </tr>
-            <tr class="border-b">
-                <td class="font-semibold p-4">Fecha de Nacimiento</td>
-                <td class="p-4" th:text="${historiaClinica.fechaNacimiento}"></td>
-            </tr>
-            <tr class="bg-gray-100 border-b">
-                <td class="font-semibold p-4">Obra Social</td>
-                <td class="p-4" th:text="${historiaClinica.obraSocial}"></td>
-            </tr>
-            <tr class="border-b">
-                <td class="font-semibold p-4">Número de Afiliado</td>
-                <td class="p-4" th:text="${historiaClinica.numeroDeAfiliado}"></td>
-            </tr>
-            <tr class="bg-gray-100 border-b">
-                <td class="font-semibold p-4">Sexo</td>
-                <td class="p-4" th:text="${historiaClinica.sexo}"></td>
-            </tr>
-            <tr class="border-b">
-                <td class="font-semibold p-4">Edad</td>
-                <td class="p-4"
-                    th:text="${T(java.time.Period).between(historiaClinica.fechaNacimiento, T(java.time.LocalDate).now()).getYears()}"></td>
-            </tr>
-            <tr class="bg-gray-100 border-b">
-                <td class="font-semibold p-4">Fecha de Diagnóstico</td>
-                <td class="p-4" th:text="${historiaClinica.fechaDiagnostico}"></td>
-            </tr>
-            <tr class="border-b">
-                <td class="font-semibold p-4">Tipo de Hemofilia</td>
-                <td class="p-4" th:text="${historiaClinica.tipo}"></td>
-            </tr>
-            <tr class="bg-gray-100 border-b">
-                <td class="font-semibold p-4">Tipo de Tratamiento</td>
-                <td class="p-4" th:text="${historiaClinica.tipoDeTratamiento}"></td>
-            </tr>
-            <tr class="border-b">
-                <td class="font-semibold p-4">Presencia de inhibidor</td>
-                <td class="p-4" th:text="${historiaClinica.inhibidor ? 'Sí' : 'No'}"></td>
-            </tr>
-            <tr class="bg-gray-100 border-b">
-                <td class="font-semibold p-4">Último Título</td>
-                <td class="p-4" th:text="'<' + ${historiaClinica.ultimoTitulo} + ' UB/ml'"></td>
-            </tr>
-            <tr class="border-b">
-                <td class="font-semibold p-4">Fecha del Último Título</td>
-                <td class="p-4" th:text="${historiaClinica.fechaUltimoTitulo}"></td>
-            </tr>
-            <tr class="bg-gray-100 border-b">
-                <td class="font-semibold p-4">Estrategias Terapéuticas</td>
-                <td class="p-4" th:text="${historiaClinica.estrategiasTrapeuticas}"></td>
-            </tr>
-            <tr class="border-b">
-                <td class="font-semibold p-4">Peso</td>
-                <td class="p-4" th:text="${historiaClinica.peso} + 'Kg'"></td>
-            </tr>
-            <tr class="bg-gray-100 border-b">
-                <td class="font-semibold p-4">Dosis</td>
-                <td class="p-4"
-                    th:text="${historiaClinica.tipoDeFactor} + ' ' + ${historiaClinica.dosis1} + ' - ' + ${historiaClinica.tipoDeFactor} + ' ' + ${historiaClinica.dosis2}"></td>
-            </tr>
-            <tr class="border-b">
-                <td class="font-semibold p-4">Dosis UI/Kg</td>
-                <td class="p-4"
-                    th:text="${historiaClinica.dosis1 / historiaClinica.peso} + 'UI/Kg - ' + ${historiaClinica.dosis2 / historiaClinica.peso} + 'UI/Kg'"></td>
-            </tr>
-            <tr class="bg-gray-100 border-b">
-                <td class="font-semibold p-4">Observaciones</td>
-                <td class="p-4" th:text="${historiaClinica.observaciones}"></td>
-            </tr>
-            <tr class="border-b">
-                <td class="font-semibold p-4">Fecha de historia</td>
-                <td class="p-4" th:text="${historiaClinica.fechaHistoriaClinica}"></td>
-            </tr>
-            </tbody>
-        </table>
-    </section>
+<main class="flex-grow pt-8 pb-8 px-4 text-center">
+    <div class="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg">
 
-    <!-- Sección de último evento -->
-    <section class="mb-8">
-        <!-- Contenedor para el título y el aviso -->
-        <div class="flex items-center justify-between mb-4">
-            <h2 class="text-2xl font-semibold text-gray-900">Último Evento</h2>
-            <div th:if="${ultimoEpisodio.episodioEnCurso}" class="bg-red-500 text-white px-3 py-1 text-sm rounded-full">
-                En curso
+        <header class="mb-8">
+            <h1 class="text-2xl font-bold text-gray-900"
+                th:text="'Historia Clinica de: ' + ${historiaClinica.nombre} + ' ' + ${historiaClinica.apellido}"></h1>
+        </header>
+
+        <section class="mb-8">
+            <table class="w-full border-collapse">
+                <tbody>
+                <!-- Categoría: Datos Personales -->
+                <tr class="bg-gray-200">
+                    <td colspan="2" class="font-semibold p-4 text-lg">Datos Personales</td>
+                </tr>
+                <tr class="border-b">
+                    <td class="font-semibold p-4">Número de Historia Clínica</td>
+                    <td class="p-4" th:text="${historiaClinica.numeroHistoriaClinica}"></td>
+                </tr>
+                <tr class="border-b">
+                    <td class="font-semibold p-4">DNI</td>
+                    <td class="p-4" th:text="${historiaClinica.dni}"></td>
+                </tr>
+                <tr class="border-b">
+                    <td class="font-semibold p-4">Edad</td>
+                    <td class="p-4"
+                        th:text="${T(java.time.Period).between(historiaClinica.fechaNacimiento, T(java.time.LocalDate).now()).getYears()}"></td>
+                </tr>
+                <tr class="border-b">
+                    <td class="font-semibold p-4">Fecha de Nacimiento</td>
+                    <td class="p-4" th:text="${historiaClinica.fechaNacimiento}"></td>
+                </tr>
+                <tr class="border-b">
+                    <td class="font-semibold p-4">Peso</td>
+                    <td class="p-4" th:text="${historiaClinica.peso} + 'Kg'"></td>
+                </tr>
+                <tr class="border-b">
+                    <td class="font-semibold p-4">Sexo</td>
+                    <td class="p-4" th:text="${historiaClinica.sexo}"></td>
+                </tr>
+                <tr class="border-b">
+                    <td class="font-semibold p-4">Teléfono de Contacto</td>
+                    <td class="p-4" th:text="${historiaClinica.telefonoDeContacto}"></td>
+                </tr>
+
+                <!-- Categoría: Diagnóstico y Tratamiento -->
+                <tr class="bg-gray-200">
+                    <td colspan="2" class="font-semibold p-4 text-lg">Diagnóstico y Tratamiento</td>
+                </tr>
+                <tr class="border-b">
+                    <td class="font-semibold p-4">Fecha de Diagnóstico</td>
+                    <td class="p-4" th:text="${historiaClinica.fechaDiagnostico}"></td>
+                </tr>
+                <tr class="border-b">
+                    <td class="font-semibold p-4">Tipo de Hemofilia</td>
+                    <td class="p-4" th:text="${historiaClinica.tipo}"></td>
+                </tr>
+                <tr class="border-b">
+                    <td class="font-semibold p-4">Tipo de Tratamiento</td>
+                    <td class="p-4" th:text="${historiaClinica.tipoDeTratamiento}"></td>
+                </tr>
+                <tr class="border-b">
+                    <td class="font-semibold p-4">Presencia de inhibidor</td>
+                    <td class="p-4" th:text="${historiaClinica.inhibidor ? 'Sí' : 'No'}"></td>
+                </tr>
+                <tr class="border-b">
+                    <td class="font-semibold p-4">Último Título</td>
+                    <td class="p-4" th:text="'<' + ${historiaClinica.ultimoTitulo} + ' UB/ml'"></td>
+                </tr>
+                <tr class="border-b">
+                    <td class="font-semibold p-4">Fecha del Último Título</td>
+                    <td class="p-4" th:text="${historiaClinica.fechaUltimoTitulo}"></td>
+                </tr>
+                <tr class="border-b">
+                    <td class="font-semibold p-4">Dosis</td>
+                    <td class="p-4" th:text="${historiaClinica.tipoDeFactor} + ' ' + ${historiaClinica.dosis1} + ' - ' + ${historiaClinica.tipoDeFactor} + ' ' + ${historiaClinica.dosis2}"></td>
+                </tr>
+                <tr class="border-b">
+                    <td class="font-semibold p-4">Dosis UI/Kg</td>
+                    <td class="p-4" th:text="${historiaClinica.dosis1 / historiaClinica.peso} + 'UI/Kg - ' + ${historiaClinica.dosis2 / historiaClinica.peso} + 'UI/Kg'"></td>
+                </tr>
+
+                <!-- Categoría: Datos Médicos -->
+                <tr class="bg-gray-200">
+                    <td colspan="2" class="font-semibold p-4 text-lg">Datos Médicos</td>
+                </tr>
+                <tr class="border-b">
+                    <td class="font-semibold p-4">Obra Social</td>
+                    <td class="p-4" th:text="${historiaClinica.obraSocial}"></td>
+                </tr>
+                <tr class="border-b">
+                    <td class="font-semibold p-4">Número de Afiliado</td>
+                    <td class="p-4" th:text="${historiaClinica.numeroDeAfiliado}"></td>
+                </tr>
+
+                <!-- Categoría: Estrategias Terapéuticas -->
+                <tr class="bg-gray-200">
+                    <td colspan="2" class="font-semibold p-4 text-lg">Estrategias Terapéuticas</td>
+                </tr>
+                <tr class="border-b">
+                    <td class="font-semibold p-4">Estrategias Terapéuticas</td>
+                    <td class="p-4" th:text="${historiaClinica.estrategiasTrapeuticas}"></td>
+                </tr>
+
+                <!-- Categoría: Observaciones -->
+                <tr class="bg-gray-200">
+                    <td colspan="2" class="font-semibold p-4 text-lg">Observaciones</td>
+                </tr>
+                <tr class="border-b">
+                    <td class="font-semibold p-4">Observaciones</td>
+                    <td class="p-4" th:text="${historiaClinica.observaciones}"></td>
+                </tr>
+                <tr class="border-b">
+                    <td class="font-semibold p-4">Fecha de historia clinica</td>
+                    <td class="p-4" th:text="${historiaClinica.fechaHistoriaClinica}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="mb-8">
+
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-2xl font-semibold text-gray-900">Último Evento</h2>
+                <div th:if="${ultimoEpisodio.episodioEnCurso}"
+                     class="bg-red-500 text-white px-3 py-1 text-sm rounded-full">
+                    En curso
+                </div>
             </div>
-        </div>
 
-        <!-- Mensaje si no hay episodios -->
-        <div th:if="${episodios.isEmpty()}">
-            <p>No hay eventos registrados para este paciente.</p>
-        </div>
+            <div th:if="${ultimoEpisodio == null}">
+                <p>No hay eventos registrados para este paciente.</p>
+            </div>
 
-        <!-- Detalles del último episodio si hay episodios -->
-        <div th:if="${!episodios.isEmpty()}">
-            <p><strong>Fecha:</strong> <span th:text="${ultimoEpisodio.fechaEpisodio}"></span></p>
-            <p><strong>Episodio hemorragico:</strong> <span th:text="${ultimoEpisodio.episodioHemorragico}"></span></p>
-            <p><strong>Descripción del tratamiento:</strong> <span
-                    th:text="${ultimoEpisodio.descripcionTratamiento}"></span></p>
-        </div>
-    </section>
-</div>
+            <div th:if="${!(ultimoEpisodio==null)}">
+                <p><strong>Fecha:</strong> <span th:text="${ultimoEpisodio.fechaEpisodio}"></span></p>
+                <p><strong>Episodio hemorragico:</strong> <span th:text="${ultimoEpisodio.episodioHemorragico}"></span>
+                </p>
+                <p><strong>Descripción del tratamiento:</strong> <span
+                        th:text="${ultimoEpisodio.descripcionTratamiento}"></span></p>
+            </div>
+        </section>
+    </div>
+</main>
 
-<!-- Footer -->
-<footer class="bg-gray-200 text-gray-700 text-center py-4 mt-8 border-t border-gray-300 bottom-0 left-0 w-full">
-    <h2 class="text-xl font-semibold mb-2">Centro de Hemofilia</h2>
-    <p class="text-base"><strong>Dirección:</strong> Soler 3483, Buenos Aires, CABA</p>
-    <p class="text-base"><strong>Teléfono:</strong> 011 4963-1755</p>
+<footer class="bg-blue-500 text-white text-center py-6 bottom-0 left-0 w-full">
+    <h2 class="text-2xl font-bold mb-2">Centro de Hemofilia</h2>
+    <p class="text-lg"><strong>Dirección:</strong> Soler 3483, Buenos Aires, CABA</p>
+    <p class="text-lg"><strong>Teléfono:</strong> 011 4963-1755</p>
 </footer>
-
 </body>
 </html>

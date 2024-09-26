@@ -14,14 +14,20 @@
 </head>
 <body class="flex flex-col min-h-screen bg-gray-100 text-gray-800">
 
+<header class="bg-blue-500 text-white py-2 w-full fixed top-0 left-0 z-10 flex items-center justify-center">
+    <a th:href="@{/cliente/historiaClinica/{id}(id=${id})}" class="flex items-center">
+        <img th:src="@{/img/logo-hemo.png}" alt="Logo" class="h-11 max-w-full w-auto">
+    </a>
+</header>
+
+
 <main class="flex-grow pt-24 px-4 text-center">
     <div class="container mx-auto">
-        <!-- Mensaje de alerta -->
+
         <div class="bg-red-500 text-white text-2xl font-semibold py-4 px-6 mb-16 rounded-lg w-3/4 mx-auto">
             <p>Si hay hemorragia, hay que frenarla</p>
         </div>
 
-        <!-- Botones en una fila -->
         <div class="flex gap-4">
             <a th:href="|tel:${contactoFamiliar}|" class="flex-1">
                 <button type="button"
@@ -38,11 +44,11 @@
         </div>
     </div>
 </main>
-<!-- Footer -->
-<footer class="bg-gray-200 text-gray-800 text-center py-4 mt-8 fixed bottom-0 left-0 w-full">
-    <h2 class="text-xl font-semibold mb-2">Centro de Hemofilia</h2>
-    <p class="text-base"><strong>Dirección:</strong> Soler 3483, Buenos Aires, CABA</p>
-    <p class="text-base"><strong>Teléfono:</strong> 011 4963-1755</p>
+
+<footer class="bg-blue-500 text-white text-center fixed py-6 bottom-0 left-0 w-full">
+    <h2 class="text-2xl font-bold mb-2">Centro de Hemofilia</h2>
+    <p class="text-lg"><strong>Dirección:</strong> Soler 3483, Buenos Aires, CABA</p>
+    <p class="text-lg"><strong>Teléfono:</strong> 011 4963-1755</p>
 </footer>
 
 </body>

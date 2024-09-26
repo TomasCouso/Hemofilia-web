@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import project.hemofilia.entidades.Episodio;
 import project.hemofilia.entidades.HistoriaClinica;
+
 import project.hemofilia.servicios.EpisodioServicio;
 import project.hemofilia.servicios.HistoriaClinicaServicio;
 
@@ -19,54 +20,55 @@ public class ClienteControlador {
 
     @Autowired
     private HistoriaClinicaServicio historiaClinicaServicio;
+
     @Autowired
     private EpisodioServicio episodioServicio;
 
+    //Metodo para ver la pagina principal, despues del escaneado del codigo QR
     @GetMapping("/historiaClinica/{id}")
     public String verHistoriaClinica(@PathVariable("id") Long id, Model model) {
+
         HistoriaClinica historiaClinica = historiaClinicaServicio.findHistoriaClinicaById(id);
 
         if (historiaClinica != null) {
             model.addAttribute("historiaClinica", historiaClinica);
         } else {
-            //configurar error
             return "error/404";
         }
 
         return "cliente/historiaClinica";
     }
 
+    //Metodo para ver toda la informacion de la historia clinica del paciente y el ultimo episodio
     @GetMapping("/historiaClinica/{id}/info")
     public String verInfoPaciente(@PathVariable("id") Long id, Model model) {
-        HistoriaClinica historiaClinica = historiaClinicaServicio.findHistoriaClinicaById(id);
-        if (historiaClinica != null) {
-            model.addAttribute("historiaClinica", historiaClinica); //historia
-            List<Episodio> episodios = episodioServicio.findAll(); // Obtener la lista de episodios
-            Episodio ultimoEpisodio = episodios.isEmpty() ? null : episodios.get(episodios.size() - 1);
-            model.addAttribute("episodios", episodios);
-            model.addAttribute("ultimoEpisodio", ultimoEpisodio);
 
+        HistoriaClinica historiaClinica = historiaClinicaServicio.findHistoriaClinicaById(id);
+
+        if (historiaClinica != null) {
+            model.addAttribute("historiaClinica", historiaClinica);
+            List<Episodio> episodios = episodioServicio.findEpisodiosPorIdHistoriaClinica(id);
+            Episodio ultimoEpisodio = episodios.isEmpty() ? null : episodios.get(episodios.size() - 1);
+            model.addAttribute("ultimoEpisodio", ultimoEpisodio);
         } else {
-            //configurar error
             return "error/404";
         }
 
         return "cliente/informacion";
     }
 
+    //Metodo para la vista para realizar llamados en caso de emergencia
     @GetMapping("/historiaClinica/{id}/urgencia")
     public String verPaginaUrgencia(@PathVariable("id") Long id, Model model) {
+
         HistoriaClinica historiaClinica = historiaClinicaServicio.findHistoriaClinicaById(id);
 
         if (historiaClinica != null) {
             model.addAttribute("contactoFamiliar", historiaClinica.getTelefonoDeContacto());
         } else {
-            //configurar error
             return "error/404";
         }
 
         return "cliente/urgencia";
     }
-
-
 }
