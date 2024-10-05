@@ -31,11 +31,11 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests(authorizeRequests -> authorizeRequests
                         .requestMatchers("/css/**", "/img/**").permitAll()
-                        .requestMatchers("/login","/error").permitAll()
+                        .requestMatchers("/login","/error", "/registro" ).permitAll()
                         .requestMatchers("/cliente/**").permitAll()
-                        .requestMatchers("/empleado/**").hasRole("EMPELADO")
-                        .anyRequest().authenticated());
-                /*.formLogin(formLogin -> formLogin
+                        .requestMatchers("/empleado/**").hasAnyRole("EMPLEADO", "ADMIN")
+                        .anyRequest().authenticated())
+                .formLogin(formLogin -> formLogin
                         .loginPage("/login")
                         .usernameParameter("correo")
                         .defaultSuccessUrl("/default", true)
@@ -43,7 +43,7 @@ public class SecurityConfig {
                 .logout(logout -> logout
                         .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                         .logoutSuccessUrl("/login?logout")
-                        .permitAll());*/
+                        .permitAll());
         return http.build();
     }
 }

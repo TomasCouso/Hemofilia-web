@@ -2,6 +2,8 @@ package project.hemofilia.controladores;
 
 import com.google.zxing.WriterException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -32,12 +34,18 @@ public class EmpleadoControlador {
     @Autowired
     private TokenServicio tokenServicio;
 
-    private GeneradorQR generadorQR;
 
     // Página inicial del empleado: lista de todas las historias clínicas
     // hay que agregar busqueda
     @GetMapping("/historiasClinicas")
-    public String listarHistoriasClinicas(Model model, @RequestParam(name = "numeroHistoria", required = false) String numeroHistoria) {
+    public String listarHistoriasClinicas(Model model, @RequestParam(name = "numeroHistoria", required = false) String numeroHistoria, Authentication authentication) {
+
+        boolean esAdministrador = authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"));
+
+        if (esAdministrador) {
+            model.addAttribute("esAdministrador", true);
+        }
+
         List<HistoriaClinica> historiasClinicas;
         if (numeroHistoria != null && !numeroHistoria.isEmpty()) {
             try {

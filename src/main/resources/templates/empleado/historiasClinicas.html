@@ -20,6 +20,14 @@
             </button>
         </form>
 
+        <div th:if="${esAdministrador}">
+            <a th:href="@{/registro}"
+            class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-lg inline-block text-center">
+            Crear Usuario Empleado
+            </a>
+        </div>
+
+
         <a th:href="@{/empleado/historiaClinica/nueva}"
            class="bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded-lg">
             Agregar Nueva Historia Clínica
