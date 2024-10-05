@@ -136,14 +136,28 @@
             No hay episodios asociados a esta historia clínica.
         </div>
 
-        <div class="mt-8 text-right">
-            <a th:href="@{/empleado/historiaClinica/eliminar/{id}(id=${historiaClinica.numeroHistoriaClinica})}"
-               onclick="return confirm('¿Estás seguro de eliminar esta Historia Clínica?');">
-                <button type="button" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-6 rounded-lg">
-                    Eliminar Historia Clínica
-                </button>
-            </a>
+        <div class="mt-8 flex justify-between items-center">
+            <!-- Botón Generar QR -->
+            <div>
+                <a th:href="@{/empleado/crearQR/{id}(id=${historiaClinica.numeroHistoriaClinica})}"
+                   onclick="return confirm('Se va a crear la imagen qr en la carpeta Descargas');">
+                    <button type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg">
+                        Generar QR
+                    </button>
+                </a>
+            </div>
+
+            <!-- Botón Eliminar Historia Clínica -->
+            <div>
+                <a th:href="@{/empleado/historiaClinica/eliminar/{id}(id=${historiaClinica.numeroHistoriaClinica})}"
+                   onclick="return confirm('¿Estás seguro de eliminar esta Historia Clínica?');">
+                    <button type="button" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-6 rounded-lg">
+                        Eliminar Historia Clínica
+                    </button>
+                </a>
+            </div>
         </div>
+
 
     </div>
 </main>

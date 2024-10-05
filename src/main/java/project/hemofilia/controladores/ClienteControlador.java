@@ -11,6 +11,7 @@ import project.hemofilia.entidades.HistoriaClinica;
 
 import project.hemofilia.servicios.EpisodioServicio;
 import project.hemofilia.servicios.HistoriaClinicaServicio;
+import project.hemofilia.servicios.TokenServicio;
 
 import java.util.List;
 
@@ -24,51 +25,70 @@ public class ClienteControlador {
     @Autowired
     private EpisodioServicio episodioServicio;
 
+    @Autowired
+    private TokenServicio tokenServicio;
+
     //Metodo para ver la pagina principal, despues del escaneado del codigo QR
-    @GetMapping("/historiaClinica/{id}")
-    public String verHistoriaClinica(@PathVariable("id") Long id, Model model) {
+    @GetMapping("/historiaClinica/{token}")
+    public String verHistoriaClinica(@PathVariable("token") String token, Model model) {
+        try {
+            Long id = tokenServicio.obtenerIdClienteDesdeToken(token);
+            HistoriaClinica historiaClinica = historiaClinicaServicio.findHistoriaClinicaById(id);
 
-        HistoriaClinica historiaClinica = historiaClinicaServicio.findHistoriaClinicaById(id);
+            if (historiaClinica != null) {
+                model.addAttribute("historiaClinica", historiaClinica);
+            } else {
+                return "redirect:/error/404";
+            }
 
-        if (historiaClinica != null) {
-            model.addAttribute("historiaClinica", historiaClinica);
-        } else {
-            return "error/404";
+            return "cliente/historiaClinica";
+        } catch (Exception e) {
+            return "redirect:/error/404";
         }
-
-        return "cliente/historiaClinica";
     }
 
     //Metodo para ver toda la informacion de la historia clinica del paciente y el ultimo episodio
-    @GetMapping("/historiaClinica/{id}/info")
-    public String verInfoPaciente(@PathVariable("id") Long id, Model model) {
+    @GetMapping("/historiaClinica/{token}/info")
+    public String verInfoPaciente(@PathVariable("token") String token, Model model) {
 
-        HistoriaClinica historiaClinica = historiaClinicaServicio.findHistoriaClinicaById(id);
+        try {
+            Long id = tokenServicio.obtenerIdClienteDesdeToken(token);
+            HistoriaClinica historiaClinica = historiaClinicaServicio.findHistoriaClinicaById(id);
 
-        if (historiaClinica != null) {
-            model.addAttribute("historiaClinica", historiaClinica);
-            List<Episodio> episodios = episodioServicio.findEpisodiosPorIdHistoriaClinica(id);
-            Episodio ultimoEpisodio = episodios.isEmpty() ? null : episodios.get(episodios.size() - 1);
-            model.addAttribute("ultimoEpisodio", ultimoEpisodio);
-        } else {
-            return "error/404";
+            if (historiaClinica != null) {
+                model.addAttribute("historiaClinica", historiaClinica);
+                List<Episodio> episodios = episodioServicio.findEpisodiosPorIdHistoriaClinica(id);
+                Episodio ultimoEpisodio = episodios.isEmpty() ? null : episodios.getLast();
+                model.addAttribute("ultimoEpisodio", ultimoEpisodio);
+            } else {
+                return "redirect:/error/404";
+            }
+
+            return "cliente/informacion";
+        } catch (Exception e) {
+            return "redirect:/error/404";
         }
 
-        return "cliente/informacion";
+
     }
 
     //Metodo para la vista para realizar llamados en caso de emergencia
-    @GetMapping("/historiaClinica/{id}/urgencia")
-    public String verPaginaUrgencia(@PathVariable("id") Long id, Model model) {
+    @GetMapping("/historiaClinica/{token}/urgencia")
+    public String verPaginaUrgencia(@PathVariable("token") String token, Model model) {
 
-        HistoriaClinica historiaClinica = historiaClinicaServicio.findHistoriaClinicaById(id);
+        try {
+            Long id = tokenServicio.obtenerIdClienteDesdeToken(token);
+            HistoriaClinica historiaClinica = historiaClinicaServicio.findHistoriaClinicaById(id);
 
-        if (historiaClinica != null) {
-            model.addAttribute("contactoFamiliar", historiaClinica.getTelefonoDeContacto());
-        } else {
-            return "error/404";
+            if (historiaClinica != null) {
+                model.addAttribute("contactoFamiliar", historiaClinica.getTelefonoDeContacto());
+            } else {
+                return "redirect:/error/404";
+            }
+
+            return "cliente/urgencia";
+        } catch (Exception e) {
+            return "redirect:/error/404";
         }
-
-        return "cliente/urgencia";
     }
 }

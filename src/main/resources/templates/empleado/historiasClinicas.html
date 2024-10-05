@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Listado de Historias Clínicas</title>
-    <!-- Incluir Tailwind CSS desde CDN -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="icon" th:href="@{/img/favicon.ico}">
 </head>
@@ -13,59 +12,71 @@
     <div class="flex justify-between items-center mb-4">
         <h1 class="text-2xl font-bold">Historias Clínicas</h1>
 
-        <!-- Botón al lado derecho -->
-        <a th:href="@{/empleado/historiaClinica/nueva}" class="bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded-lg">
+        <form th:action="@{/empleado/historiasClinicas}" method="get" class="flex items-center space-x-4">
+            <input type="text" name="numeroHistoria" placeholder="Buscar por N° Historia"
+                   class="py-2 px-4 border rounded-lg" th:value="${numeroHistoria}">
+            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-lg">
+                Buscar
+            </button>
+        </form>
+
+        <a th:href="@{/empleado/historiaClinica/nueva}"
+           class="bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded-lg">
             Agregar Nueva Historia Clínica
         </a>
     </div>
 
-    <table class="min-w-full bg-white">
-        <thead>
-        <tr>
-            <th class="py-2 px-4 bg-gray-200 text-center">N° Historia Clínica</th>
-            <th class="py-2 px-4 bg-gray-200 text-center">Nombre</th>
-            <th class="py-2 px-4 bg-gray-200 text-center">Apellido</th>
-            <th class="py-2 px-4 bg-gray-200 text-center">DNI</th>
-            <th class="py-2 px-4 bg-gray-200 text-center">Fecha Diagnóstico</th>
-            <th class="py-2 px-4 bg-gray-200 text-center">Tipo de Tratamiento</th>
-            <th class="py-2 px-4 bg-gray-200 text-center">Acciones</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="historiaClinica : ${historiasClinicas}">
-            <td class="py-2 px-4 border-b border-gray-200 text-center"
-                th:text="${historiaClinica.numeroHistoriaClinica}"></td>
-            <td class="py-2 px-4 border-b border-gray-200 text-center" th:text="${historiaClinica.nombre}"></td>
-            <td class="py-2 px-4 border-b border-gray-200 text-center" th:text="${historiaClinica.apellido}"></td>
-            <td class="py-2 px-4 border-b border-gray-200 text-center" th:text="${historiaClinica.dni}"></td>
-            <td class="py-2 px-4 border-b border-gray-200 text-center"
-                th:text="${historiaClinica.fechaDiagnostico}"></td>
-            <td class="py-2 px-4 border-b border-gray-200 text-center"
-                th:text="${historiaClinica.tipoDeTratamiento}"></td>
-            <td class="py-2 px-4 border-b border-gray-200 text-center">
-                <div class="flex gap-4">
-                    <a th:href="@{/empleado/historiaClinica/{numeroHistoriaClinica}(numeroHistoriaClinica=${historiaClinica.numeroHistoriaClinica})}"
-                       class="flex-1">
-                        <button type="button"
-                                class="bg-blue-500 hover:bg-blue-700 text-white py-4 rounded-lg w-full h-16">Ver
-                            detalles
-                        </button>
-                    </a>
+    <div th:if="${error == null}">
+        <table class="min-w-full bg-white">
+            <thead>
+            <tr>
+                <th class="py-2 px-4 bg-gray-200 text-center">N° Historia Clínica</th>
+                <th class="py-2 px-4 bg-gray-200 text-center">Nombre</th>
+                <th class="py-2 px-4 bg-gray-200 text-center">Apellido</th>
+                <th class="py-2 px-4 bg-gray-200 text-center">DNI</th>
+                <th class="py-2 px-4 bg-gray-200 text-center">Fecha Diagnóstico</th>
+                <th class="py-2 px-4 bg-gray-200 text-center">Tipo de Tratamiento</th>
+                <th class="py-2 px-4 bg-gray-200 text-center">Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="historiaClinica : ${historiasClinicas}">
+                <td class="py-2 px-4 border-b border-gray-200 text-center"
+                    th:text="${historiaClinica.numeroHistoriaClinica}"></td>
+                <td class="py-2 px-4 border-b border-gray-200 text-center" th:text="${historiaClinica.nombre}"></td>
+                <td class="py-2 px-4 border-b border-gray-200 text-center" th:text="${historiaClinica.apellido}"></td>
+                <td class="py-2 px-4 border-b border-gray-200 text-center" th:text="${historiaClinica.dni}"></td>
+                <td class="py-2 px-4 border-b border-gray-200 text-center"
+                    th:text="${historiaClinica.fechaDiagnostico}"></td>
+                <td class="py-2 px-4 border-b border-gray-200 text-center"
+                    th:text="${historiaClinica.tipoDeTratamiento}"></td>
+                <td class="py-2 px-4 border-b border-gray-200 text-center">
+                    <div class="flex gap-4">
+                        <a th:href="@{/empleado/historiaClinica/{numeroHistoriaClinica}(numeroHistoriaClinica=${historiaClinica.numeroHistoriaClinica})}"
+                           class="flex-1">
+                            <button type="button"
+                                    class="bg-blue-500 hover:bg-blue-700 text-white py-4 rounded-lg w-full h-16">Ver
+                                detalles
+                            </button>
+                        </a>
 
-                    <a th:href="@{/empleado/historiaClinica/{numeroHistoriaClinica}/editar(numeroHistoriaClinica=${historiaClinica.numeroHistoriaClinica})}"
-                       class="flex-1">
-                        <button type="button"
-                                class="bg-green-500 hover:bg-green-700 text-white py-4 rounded-lg w-full h-16">Editar
-                        </button>
-                    </a>
-                </div>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+                        <a th:href="@{/empleado/historiaClinica/{numeroHistoriaClinica}/editar(numeroHistoriaClinica=${historiaClinica.numeroHistoriaClinica})}"
+                           class="flex-1">
+                            <button type="button"
+                                    class="bg-green-500 hover:bg-green-700 text-white py-4 rounded-lg w-full h-16">
+                                Editar
+                            </button>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
-<div th:if="${historiasClinicas == null || historiasClinicas.isEmpty()}">
-    <p>No hay ninguna historia clinica para mostrar</p>
+<div th:if="${error != null}" class="container mx-auto">
+<!--personalizar error-->
+    <p th:text="${error}"></p>
 </div>
 </body>
 </html>

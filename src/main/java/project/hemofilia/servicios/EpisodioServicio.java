@@ -22,16 +22,12 @@ public class EpisodioServicio {
         episodioRepositorio.save(episodio);
     }
 
-    public Optional<Episodio> findEpisodioPorId(Long episodioId) {
-        return episodioRepositorio.findById(episodioId);
+    public Episodio findEpisodioPorId(Long episodioId) {
+        return episodioRepositorio.findById(episodioId).orElse(null);
     }
 
     public void actualizarEpisodio(Episodio episodio) {
         episodioRepositorio.save(episodio);
-    }
-
-    public List<Episodio> findAll() {
-        return episodioRepositorio.findAll();
     }
 
     public void eliminarEpisodio(Long idEpisodio) {
