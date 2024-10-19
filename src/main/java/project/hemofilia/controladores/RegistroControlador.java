@@ -24,9 +24,7 @@ public class RegistroControlador {
     private UsuarioServicio usuarioServicio;
 
     private void crearRolesSiNoExisten() {
-        // Lista de roles que necesitas
         List<String> roles = Arrays.asList("ROLE_ADMIN", "ROLE_EMPLEADO");
-
         for (String nombreRol : roles) {
             if (!rolServicio.existePorNombre(nombreRol)) {
                 Rol rol = new Rol();
@@ -48,38 +46,40 @@ public class RegistroControlador {
     }
 
     @PostMapping("/registro")
-    public String registrarUsuario(@RequestParam("correo") String correo,
-                                   @RequestParam("nombre") String nombre,
-                                   @RequestParam("password") String password,
-                                   Model model) {
-
-        if (usuarioServicio.findByCorreo(correo) != null) {
+    public String registrarAdmin(@ModelAttribute("usuario") Usuario usuario, Model model) {
+        if (usuarioServicio.findByCorreo(usuario.getCorreo()) != null) {
             model.addAttribute("error", "El correo ya está registrado");
-            return "redirect:/registro";
+            return "registro";
         }
 
-        // Crear el nuevo usuario
-        Usuario usuario = new Usuario();
-        usuario.setCorreo(correo);
-        usuario.setNombre(nombre);
-        usuario.setPassword(password);
-
-        long count = usuarioServicio.contarAdministradores();
-        Rol usuarioRol = null;
-        if (count > 0) {
-            usuarioRol = rolServicio.findByNombre("ROLE_ADMIN");
-        }else{
-            usuarioRol = rolServicio.findByNombre("ROLE_EMPLEADO");
-        }
-        usuario.setRol(usuarioRol);
-
-        // Guardar el usuario en la base de datos
+        Rol rolAdmin = rolServicio.findByNombre("ROLE_ADMIN");
+        usuario.setRol(rolAdmin);
         usuarioServicio.save(usuario);
 
-        if (usuarioRol.getNombre().equals("ROLE_ADMIN")) {
-            return "redirect:/login";
-        }else {
-            return "redirect:/empleado/historiaClinica";
+        return "redirect:/login";
+    }
+
+    @GetMapping("/registrar")
+    public String mostrarFormularioRegistrarEmpleado(Model model) {
+        long count = usuarioServicio.contarAdministradores();
+        if (count == 0) {
+            return "redirect:/registro";
         }
+        model.addAttribute("usuario", new Usuario());
+        return "registrar";
+    }
+
+    @PostMapping("/registrar")
+    public String registrarEmpleado(@ModelAttribute("usuario") Usuario usuario, Model model) {
+        if (usuarioServicio.findByCorreo(usuario.getCorreo()) != null) {
+            model.addAttribute("error", "El correo ya está registrado");
+            return "registrar";
+        }
+
+        Rol rolEmpleado = rolServicio.findByNombre("ROLE_EMPLEADO");
+        usuario.setRol(rolEmpleado);
+        usuarioServicio.save(usuario);
+
+        return "redirect:/empleado/historiasClinicas";
     }
 }

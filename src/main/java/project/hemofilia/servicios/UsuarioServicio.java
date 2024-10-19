@@ -16,7 +16,9 @@ public class UsuarioServicio {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public long contarUsuarios() {return usuarioRepositorio.count();}
+    public long contarUsuarios() {
+        return usuarioRepositorio.count();
+    }
 
     public Usuario findByCorreo(String correo) {
         return usuarioRepositorio.findByCorreo(correo).orElse(null);
@@ -27,8 +29,7 @@ public class UsuarioServicio {
         usuarioRepositorio.save(usuario);
     }
 
-    @Query("SELECT COUNT(u) FROM Usuario u WHERE u.rol.nombre = 'ROLE_ADMIN'")
     public long contarAdministradores() {
-        return 0;
+        return usuarioRepositorio.contarAdministradores();
     }
 }
