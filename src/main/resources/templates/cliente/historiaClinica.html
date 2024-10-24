@@ -15,7 +15,7 @@
 
 <header class="bg-blue-500 text-white py-5 w-full fixed top-0 left-0 z-10 flex items-center">
 
-    <a th:href="@{/cliente/historiaClinica/{numeroHistoriaClinica}(numeroHistoriaClinica=${historiaClinica.numeroHistoriaClinica})}" class="ml-5">
+    <a th:href="@{/cliente/historiaClinica/{numeroHistoriaClinica}(numeroHistoriaClinica=${token})}" class="ml-5">
         <img th:src="@{/img/logo-hemo.png}" alt="Logo">
     </a>
 
@@ -28,11 +28,11 @@
     <p class="text-red-500 text-7xl font-bold mb-20">PACIENTE HEMOFILICO</p>
 
     <div class="flex gap-4 mt-60">
-        <a th:href="@{/cliente/historiaClinica/{numeroHistoriaClinica}/info(numeroHistoriaClinica=${historiaClinica.numeroHistoriaClinica})}" class="flex-1">
+        <a th:href="@{/cliente/historiaClinica/{numeroHistoriaClinica}/info(numeroHistoriaClinica=${token})}" class="flex-1">
             <button type="button" class="bg-blue-500 hover:bg-blue-700 text-white py-4 text-7xl rounded-lg w-full h-96">Información</button>
         </a>
 
-        <a th:href="@{/cliente/historiaClinica/{numeroHistoriaClinica}/urgencia(numeroHistoriaClinica=${historiaClinica.numeroHistoriaClinica})}" class="flex-1">
+        <a th:href="@{/cliente/historiaClinica/{numeroHistoriaClinica}/urgencia(numeroHistoriaClinica=${token})}" class="flex-1">
             <button type="button" class="bg-red-500 hover:bg-red-700 text-white py-4 text-7xl rounded-lg w-full h-96">Urgencia</button>
         </a>
     </div>

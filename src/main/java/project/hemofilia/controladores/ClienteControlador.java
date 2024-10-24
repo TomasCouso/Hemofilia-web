@@ -37,6 +37,7 @@ public class ClienteControlador {
 
             if (historiaClinica != null) {
                 model.addAttribute("historiaClinica", historiaClinica);
+                model.addAttribute("token", token);
             } else {
                 return "redirect:/error/404";
             }
@@ -60,6 +61,7 @@ public class ClienteControlador {
                 List<Episodio> episodios = episodioServicio.findEpisodiosPorIdHistoriaClinica(id);
                 Episodio ultimoEpisodio = episodios.isEmpty() ? null : episodios.getLast();
                 model.addAttribute("ultimoEpisodio", ultimoEpisodio);
+                model.addAttribute("token", token);
             } else {
                 return "redirect:/error/404";
             }
@@ -82,6 +84,7 @@ public class ClienteControlador {
 
             if (historiaClinica != null) {
                 model.addAttribute("contactoFamiliar", historiaClinica.getTelefonoDeContacto());
+                model.addAttribute("token", token);
             } else {
                 return "redirect:/error/404";
             }

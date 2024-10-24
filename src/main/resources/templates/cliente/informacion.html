@@ -15,7 +15,7 @@
 <body class="flex flex-col min-h-screen bg-gray-100 text-gray-800">
 
 <header class="bg-blue-500 text-white py-2 w-full top-0 left-0 z-10 flex items-center justify-center">
-    <a th:href="@{/cliente/historiaClinica/{id}(id=${id})}" class="flex items-center">
+    <a th:href="@{/cliente/historiaClinica/{numeroHistoriaClinica}(numeroHistoriaClinica=${token})}" class="flex items-center">
         <img th:src="@{/img/logo-hemo.png}" alt="Logo" class="h-11 max-w-full w-auto">
     </a>
 </header>
