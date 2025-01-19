@@ -74,8 +74,8 @@
                     <td class="p-4" th:text="${historiaClinica.fechaDiagnostico}"></td>
                 </tr>
                 <tr class="border-b">
-                    <td class="font-semibold p-4">Tipo de Hemofilia</td>
-                    <td class="p-4" th:text="${historiaClinica.tipo}"></td>
+                    <td class="font-semibold p-4">Tipo y severidad de Hemofilia</td>
+                    <td class="p-4" th:text="${historiaClinica.getTipoHemofilia}"></td>
                 </tr>
                 <tr class="border-b">
                     <td class="font-semibold p-4">Tipo de Tratamiento</td>
@@ -95,7 +95,7 @@
                 </tr>
                 <tr class="border-b">
                     <td class="font-semibold p-4">Dosis</td>
-                    <td class="p-4" th:text="${historiaClinica.tipoDeFactor} + ' ' + ${historiaClinica.dosis1} + ' - ' + ${historiaClinica.tipoDeFactor} + ' ' + ${historiaClinica.dosis2}"></td>
+                    <td class="p-4" th:text="${historiaClinica.tipoDeFactor} + ' ' + ${historiaClinica.dosis1} + 'UI - ' + ${historiaClinica.tipoDeFactor} + ' ' + ${historiaClinica.dosis2} + 'UI'"></td>
                 </tr>
                 <tr class="border-b">
                     <td class="font-semibold p-4">Dosis UI/Kg</td>

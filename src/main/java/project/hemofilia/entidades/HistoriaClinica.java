@@ -60,7 +60,7 @@ public class HistoriaClinica {
     private LocalDate fechaDiagnostico;
 
     @Column(name = "tipo", nullable = false)
-    private String tipo;
+    private String tipoHemofilia;
 
     @Column(name = "ultimo_titulo")
     private double ultimoTitulo;

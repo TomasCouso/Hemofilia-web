@@ -31,13 +31,13 @@
 
         <!-- Nombre -->
         <div class="mb-4">
-            <label for="nombre" class="block text-lg font-medium text-gray-700">Nombre</label>
+            <label for="nombre" class="block text-lg font-medium text-gray-700">Nombres</label>
             <input type="text" id="nombre" name="nombre" th:field="*{nombre}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
         </div>
 
         <!-- Apellido -->
         <div class="mb-4">
-            <label for="apellido" class="block text-lg font-medium text-gray-700">Apellido</label>
+            <label for="apellido" class="block text-lg font-medium text-gray-700">Apellidos</label>
             <input type="text" id="apellido" name="apellido" th:field="*{apellido}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
         </div>
 
@@ -59,7 +59,7 @@
 
         <!-- Teléfono de Contacto -->
         <div class="mb-4">
-            <label for="telefonoDeContacto" class="block text-lg font-medium text-gray-700">Teléfono de Contacto</label>
+            <label for="telefonoDeContacto" class="block text-lg font-medium text-gray-700">Teléfono de Contacto </label>
             <input type="text" id="telefonoDeContacto" name="telefonoDeContacto" th:field="*{telefonoDeContacto}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
         </div>
 
@@ -89,15 +89,21 @@
 
         <!-- Tipo -->
         <div class="mb-4">
-            <label for="tipo" class="block text-lg font-medium text-gray-700">Tipo</label>
-            <input type="text" id="tipo" name="tipo" th:field="*{tipo}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
+            <label for="tipo" class="block text-lg font-medium text-gray-700">Tipo y severidad de Hemofilia</label>
+            <input type="text" id="tipo" name="tipo" th:field="*{tipoHemofilia}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
         </div>
 
         <!-- Último Título -->
         <div class="mb-4">
             <label for="ultimoTitulo" class="block text-lg font-medium text-gray-700">Último Título</label>
-            <input type="number" step="0.01" id="ultimoTitulo" name="ultimoTitulo" th:field="*{ultimoTitulo}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
+            <div class="mt-1 flex items-center border-gray-300 rounded-md shadow-sm">
+                <span class="text-gray-700 mr-2">&lt;</span>
+                <input type="number" step="0.1" id="ultimoTitulo" name="ultimoTitulo" th:field="*{ultimoTitulo}" class="w-full border-transparent focus:ring-0 focus:border-transparent" required> <!-- El valor editable -->
+                <span class="text-gray-700 ml-2">Ub/ml</span>
+            </div>
         </div>
+
+
 
         <!-- Fecha del Último Título -->
         <div class="mb-4">
@@ -139,7 +145,10 @@
         <!-- Peso -->
         <div class="mb-4">
             <label for="peso" class="block text-lg font-medium text-gray-700">Peso</label>
-            <input type="number" id="peso" name="peso" th:field="*{peso}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
+            <div class="mt-1 flex items-center border-gray-300 rounded-md shadow-sm">
+                <input type="number" id="peso" name="peso" th:field="*{peso}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
+                <span class="text-gray-700 ml-2">Kg</span>
+            </div>
         </div>
 
         <!-- Tipo de Factor -->
@@ -151,19 +160,25 @@
         <!-- Dosis 1 -->
         <div class="mb-4">
             <label for="dosis1" class="block text-lg font-medium text-gray-700">Dosis 1</label>
-            <input type="number" id="dosis1" name="dosis1" th:field="*{dosis1}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
+            <div class="mt-1 flex items-center border-gray-300 rounded-md shadow-sm">
+                <input type="number" id="dosis1" name="dosis1" th:field="*{dosis1}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
+                <span class="text-gray-700 ml-2">UI</span>
+            </div>
         </div>
 
         <!-- Dosis 2 -->
         <div class="mb-4">
             <label for="dosis2" class="block text-lg font-medium text-gray-700">Dosis 2</label>
-            <input type="number" id="dosis2" name="dosis2" th:field="*{dosis2}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
+            <div class="mt-1 flex items-center border-gray-300 rounded-md shadow-sm">
+                <input type="number" id="dosis2" name="dosis2" th:field="*{dosis2}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
+                <span class="text-gray-700 ml-2">UI</span>
+            </div>
         </div>
 
         <!-- Observaciones -->
         <div class="mb-4">
             <label for="observaciones" class="block text-lg font-medium text-gray-700">Observaciones</label>
-            <textarea id="observaciones" name="observaciones" th:field="*{observaciones}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" rows="2" required></textarea>
+            <textarea id="observaciones" name="observaciones" th:field="*{observaciones}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" rows="2" ></textarea>
         </div>
 
         <!-- Botones -->
