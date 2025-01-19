@@ -15,9 +15,12 @@
 <body class="bg-gray-100 text-gray-800">
 
 <!-- Encabezado: ocupando el ancho completo -->
-<header class="bg-blue-500 text-white py-5 w-full">
-    <h1 class="text-4xl font-bold text-center">Historia Clínica de <span th:text="${historiaClinica.nombre}"></span>
-        <span th:text="${historiaClinica.apellido}"></span></h1>
+<header class="bg-blue-500 text-white py-4 px-12 flex items-center justify-between">
+    <img th:src="@{/img/logo-hemo.png}" alt="Logo" class="h-11 max-w-full w-auto mr-6">
+    <h1 class="text-4xl font-bold text-center">Historia Clínica de <span th:text="${historiaClinica.nombre}"></span> <span th:text="${historiaClinica.apellido}"></span></h1>
+    <a th:href="@{/empleado/historiasClinicas}" class="inline-block px-6 py-2 text-white bg-blue-700 hover:bg-blue-900 rounded-md">
+        Inicio
+    </a>
 </header>
 
 <!-- Contenido principal -->

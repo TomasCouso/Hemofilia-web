@@ -9,11 +9,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import project.hemofilia.servicios.UsuarioServicio;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping()
 public class LoginControlador {
 
     @Autowired
     private UsuarioServicio usuarioServicio;
+
+    @GetMapping("/")
+    public String redirigirLogin() {
+        return "login";
+    }
 
     @GetMapping("/login")
     public String login(Model model) {
