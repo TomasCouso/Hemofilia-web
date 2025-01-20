@@ -9,6 +9,10 @@ import java.util.Optional;
 public interface UsuarioRepositorio extends JpaRepository<Usuario, Long> {
     Optional<Usuario> findByCorreo(String correo);
 
+    Optional<Usuario> findByNombre(String nombre);
+
     @Query("SELECT COUNT(u) FROM Usuario u WHERE u.rol.nombre = 'ROLE_ADMIN'")
     long contarAdministradores();
+
+    void deleteByCorreo(String correo);
 }

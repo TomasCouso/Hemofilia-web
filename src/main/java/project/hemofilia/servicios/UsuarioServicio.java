@@ -1,20 +1,17 @@
 package project.hemofilia.servicios;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import project.hemofilia.entidades.Usuario;
 import project.hemofilia.repositorios.UsuarioRepositorio;
+
+import java.util.List;
 
 @Service
 public class UsuarioServicio {
 
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     public long contarUsuarios() {
         return usuarioRepositorio.count();
@@ -25,9 +22,16 @@ public class UsuarioServicio {
     }
 
     public void save(Usuario usuario) {
-        usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
         usuarioRepositorio.save(usuario);
     }
+
+    public void eliminarUsuario (Usuario usuario) {
+        usuarioRepositorio.deleteByCorreo(usuario.getCorreo());
+    }
+
+    public List<Usuario> findAll() {return usuarioRepositorio.findAll();}
+
+    public Usuario findBynombre(String nombre) { return usuarioRepositorio.findByNombre(nombre).orElse(null); }
 
     public long contarAdministradores() {
         return usuarioRepositorio.contarAdministradores();

@@ -17,7 +17,7 @@ public class LoginControlador {
 
     @GetMapping("/")
     public String redirigirLogin() {
-        return "login";
+        return "redirect:/login";
     }
 
     @GetMapping("/login")

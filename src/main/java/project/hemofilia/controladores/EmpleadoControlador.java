@@ -4,15 +4,16 @@ import com.google.zxing.WriterException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import project.hemofilia.entidades.Episodio;
 import project.hemofilia.entidades.HistoriaClinica;
-import project.hemofilia.servicios.EpisodioServicio;
-import project.hemofilia.servicios.HistoriaClinicaServicio;
-import project.hemofilia.servicios.TokenServicio;
+import project.hemofilia.entidades.Rol;
+import project.hemofilia.entidades.Usuario;
+import project.hemofilia.servicios.*;
 import project.hemofilia.utils.GeneradorQR;
 
 import java.io.File;
@@ -33,6 +34,12 @@ public class EmpleadoControlador {
 
     @Autowired
     private TokenServicio tokenServicio;
+    @Autowired
+    private UsuarioServicio usuarioServicio;
+    @Autowired
+    private RolServicio rolServicio;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
 
     // Página inicial del empleado: lista de todas las historias clínicas
@@ -253,5 +260,84 @@ public class EmpleadoControlador {
 
         // Redirigir de nuevo a la página de la historia clínica con el mensaje
         return "redirect:/empleado/historiaClinica/" + id;
+    }
+
+    //Administracion de empleados (Solo admin)
+    @GetMapping("/usuarios")
+    public String AdministracionUsuarios(Model model, @RequestParam(name = "nombreUsuario", required = false) String nombreUsuario) {
+        List<Usuario> usuarios;
+        if (nombreUsuario != null && !nombreUsuario.isEmpty()) {
+            try {
+                Usuario usuario = usuarioServicio.findBynombre(nombreUsuario);
+                if (usuario != null) {
+                    usuarios = List.of(usuario);
+                } else {
+                    model.addAttribute("error", "No se encontro ningun usuario con el nombre: " + nombreUsuario);
+                    usuarios = Collections.emptyList();
+                }
+            } catch (NumberFormatException e) {
+                model.addAttribute("error", "El nombre ingresado no es válido.");
+                usuarios = Collections.emptyList();
+            }
+        } else {
+            usuarios = usuarioServicio.findAll();
+        }
+
+        model.addAttribute("usuarios", usuarios);
+        model.addAttribute("nombreUsuario", nombreUsuario);
+        return "empleado/usuarios/index";
+    }
+
+    // Editar informacion de usuario (Solo admin)
+    @GetMapping("/usuarios/{correo}/editar")
+    public String mostrarFormularioEdicion(@PathVariable("correo") String correo, Model model) {
+
+        Usuario usuario = usuarioServicio.findByCorreo(correo);
+        if (usuario == null) {
+            return "redirect:/error/404";
+        }
+        model.addAttribute("usuario", usuario);
+        return "empleado/usuarios/editarUsuario";
+    }
+
+    // Procesar la edicion de un usuario
+    @PostMapping("/usuarios/{correo}/editar")
+    public String editarUsuario(@PathVariable("correo") String correo, @ModelAttribute Usuario usuario) {
+        Usuario u = usuarioServicio.findByCorreo(correo);
+        if (u == null) {
+            return "redirect:/error/404";
+        }
+
+        if (u.getId()== 1){
+            return "redirect:/empleado/usuarios";
+        }
+
+        usuario.setId(u.getId());
+        usuario.setCorreo(u.getCorreo());
+        usuario.setPassword(u.getPassword());
+
+        Rol rol = rolServicio.findByNombre(usuario.getRol().getNombre());
+        usuario.setRol(rol);
+
+        usuarioServicio.save(usuario);
+        return "redirect:/empleado/usuarios";
+    }
+
+    // Eliminar un usuario
+    @Transactional
+    @GetMapping("/usuarios/{correo}/eliminar")
+    public String eliminarUsuario(@PathVariable("correo") String correo) {
+
+        Usuario usuario = usuarioServicio.findByCorreo(correo);
+        if (usuario == null) {
+            return "redirect:/error/404";
+        }
+
+        if (usuario.getId()== 1){
+            return "redirect:/empleado/usuarios";
+        }
+
+        usuarioServicio.eliminarUsuario(usuario);
+        return "redirect:/empleado/usuarios";
     }
 }
