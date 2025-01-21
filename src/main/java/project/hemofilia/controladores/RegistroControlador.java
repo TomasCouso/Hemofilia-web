@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import project.hemofilia.entidades.Rol;
 import project.hemofilia.entidades.Usuario;
 import project.hemofilia.servicios.RolServicio;
@@ -49,9 +50,8 @@ public class RegistroControlador {
     }
 
     @PostMapping("/registro")
-    public String registrarAdmin(@ModelAttribute("usuario") Usuario usuario, Model model) {
+    public String registrarAdmin(@ModelAttribute("usuario") Usuario usuario) {
         if (usuarioServicio.findByCorreo(usuario.getCorreo()) != null) {
-            model.addAttribute("error", "El correo ya está registrado");
             return "registro";
         }
 
@@ -74,7 +74,7 @@ public class RegistroControlador {
     }
 
     @PostMapping("/registrar")
-    public String registrarEmpleado(@ModelAttribute("usuario") Usuario usuario, Model model) {
+    public String registrarEmpleado(@ModelAttribute("usuario") Usuario usuario, Model model, RedirectAttributes redirectAttributes) {
         if (usuarioServicio.findByCorreo(usuario.getCorreo()) != null) {
             model.addAttribute("error", "El correo ya está registrado");
             return "registrar";
@@ -85,6 +85,7 @@ public class RegistroControlador {
         usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
         usuarioServicio.save(usuario);
 
-        return "redirect:/empleado/historiasClinicas";
+        redirectAttributes.addFlashAttribute("aviso", "Empleado registrado exitosamente");
+        return "redirect:/empleado/usuarios";
     }
 }

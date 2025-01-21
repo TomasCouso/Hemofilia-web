@@ -44,6 +44,11 @@
         </a>
     </div>
 
+    <!-- Aviso -->
+    <div th:if="${aviso}" class="bg-yellow-100 text-yellow-800 border-l-4 border-yellow-500 p-4 mb-4">
+        <p th:text="${aviso}"></p>
+    </div>
+
     <div th:if="${error == null}">
         <table class="min-w-full bg-white">
             <thead>

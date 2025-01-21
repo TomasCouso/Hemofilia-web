@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import project.hemofilia.entidades.Episodio;
 import project.hemofilia.entidades.HistoriaClinica;
 import project.hemofilia.entidades.Rol;
@@ -74,13 +75,19 @@ public class EmpleadoControlador {
 
         model.addAttribute("historiasClinicas", historiasClinicas);
         model.addAttribute("numeroHistoria", numeroHistoria);
+
+        if (model.containsAttribute("aviso")) {
+            String aviso = (String) model.getAttribute("aviso");
+            model.addAttribute("aviso", aviso);
+        }
+
         return "empleado/historiasClinicas";
     }
 
 
     // Ver una historia clínica específica
     @GetMapping("/historiaClinica/{id}")
-    public String verHistoriaClinica(@PathVariable("id") Long id, Model model) {
+    public String verHistoriaClinica(Model model, @PathVariable("id") Long id) {
 
         HistoriaClinica historiaClinica = historiaClinicaServicio.findHistoriaClinicaById(id);
         if (historiaClinica == null) {
@@ -90,6 +97,11 @@ public class EmpleadoControlador {
         List<Episodio> episodios = episodioServicio.findEpisodiosPorIdHistoriaClinica(id);
         model.addAttribute("historiaClinica", historiaClinica);
         model.addAttribute("episodios", episodios);
+        if (model.containsAttribute("aviso")) {
+            String aviso = (String) model.getAttribute("aviso");
+            model.addAttribute("aviso", aviso);
+        }
+
         return "empleado/verInformacion";
     }
 
@@ -108,7 +120,7 @@ public class EmpleadoControlador {
     // Procesar la edición de una historia clínica
     @PostMapping("/historiaClinica/{id}/editar")
     public String editarHistoriaClinica(@PathVariable("id") Long id, @ModelAttribute HistoriaClinica
-            historiaClinica) {
+            historiaClinica, RedirectAttributes redirectAttributes) {
 
         HistoriaClinica h =historiaClinicaServicio.findHistoriaClinicaById(id);
         if (h == null) {
@@ -116,6 +128,7 @@ public class EmpleadoControlador {
         }
 
         historiaClinicaServicio.actualizarHistoriaClinica(historiaClinica);
+        redirectAttributes.addFlashAttribute("aviso", "Historia clínica actualizada correctamente");
         return "redirect:/empleado/historiasClinicas";
     }
 
@@ -128,19 +141,20 @@ public class EmpleadoControlador {
 
     // Procesar la creación de una nueva historia clínica
     @PostMapping("/historiaClinica/nueva")
-    public String crearHistoriaClinica(@ModelAttribute HistoriaClinica historiaClinica) {
+    public String crearHistoriaClinica(@ModelAttribute HistoriaClinica historiaClinica, RedirectAttributes redirectAttributes) {
         HistoriaClinica h =historiaClinicaServicio.findHistoriaClinicaById(historiaClinica.getNumeroHistoriaClinica());
         if (h != null) {
             return "redirect:/error/404";
         }
         historiaClinicaServicio.crearHistoriaClinica(historiaClinica);
+        redirectAttributes.addFlashAttribute("aviso", "Historia clínica creada correctamente");
         return "redirect:/empleado/historiasClinicas";
     }
 
     // Eliminar una historia clínica
     @Transactional
     @GetMapping("/historiaClinica/eliminar/{id}")
-    public String eliminarHistoriaClinica(@PathVariable("id") Long id) {
+    public String eliminarHistoriaClinica(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
 
         HistoriaClinica historiaClinica =historiaClinicaServicio.findHistoriaClinicaById(id);
         if (historiaClinica == null) {
@@ -148,6 +162,7 @@ public class EmpleadoControlador {
         }
 
         historiaClinicaServicio.eliminarHistoriaClinica(id);
+        redirectAttributes.addFlashAttribute("aviso", "Historia clínica eliminada correctamente");
         return "redirect:/empleado/historiasClinicas";
     }
 
@@ -169,7 +184,7 @@ public class EmpleadoControlador {
     // Procesar la creación de un nuevo evento
     @PostMapping("/historiaClinica/{historiaClinicaId}/episodio/nuevo")
     public String crearEpisodio(@PathVariable("historiaClinicaId") Long historiaClinicaId,
-                                @ModelAttribute Episodio episodio) {
+                                @ModelAttribute Episodio episodio, RedirectAttributes redirectAttributes) {
 
         HistoriaClinica historiaClinica =historiaClinicaServicio.findHistoriaClinicaById(historiaClinicaId);
         if (historiaClinica == null) {
@@ -178,6 +193,7 @@ public class EmpleadoControlador {
 
         episodio.setHistoriaClinica(historiaClinicaServicio.findHistoriaClinicaById(historiaClinicaId));
         episodioServicio.crearEpisodio(episodio);
+        redirectAttributes.addFlashAttribute("aviso", "Episodio creado correctamente");
         return "redirect:/empleado/historiaClinica/" + historiaClinicaId;
     }
 
@@ -202,7 +218,7 @@ public class EmpleadoControlador {
     @PostMapping("/historiaClinica/{historiaClinicaId}/episodio/editar/{episodioId}")
     public String editarEpisodio(@PathVariable("historiaClinicaId") Long historiaClinicaId,
                                  @PathVariable("episodioId") Long episodioId,
-                                 @ModelAttribute Episodio episodio) {
+                                 @ModelAttribute Episodio episodio, RedirectAttributes redirectAttributes) {
 
         HistoriaClinica h =historiaClinicaServicio.findHistoriaClinicaById(historiaClinicaId);
         Episodio e = episodioServicio.findEpisodioPorId(episodioId);
@@ -213,13 +229,14 @@ public class EmpleadoControlador {
         episodio.setHistoriaClinica(historiaClinicaServicio.findHistoriaClinicaById(historiaClinicaId));
         episodio.setId(episodioId);
         episodioServicio.actualizarEpisodio(episodio);
+        redirectAttributes.addFlashAttribute("aviso", "Episodio actualizado correctamente");
         return "redirect:/empleado/historiaClinica/" + historiaClinicaId;
     }
 
     // Eliminar evento de historia clinica
     @GetMapping("historiaClinica/{id}/episodio/eliminar/{id_episodio}")
     public String eliminarEventoDeHistoria(@PathVariable("id") Long idHistoria, @PathVariable("id_episodio") Long
-            idEpisodio) {
+            idEpisodio, RedirectAttributes redirectAttributes) {
 
         HistoriaClinica historiaClinica =historiaClinicaServicio.findHistoriaClinicaById(idHistoria);
         Episodio episodio = episodioServicio.findEpisodioPorId(idEpisodio);
@@ -228,12 +245,13 @@ public class EmpleadoControlador {
         }
 
         episodioServicio.eliminarEpisodio(idEpisodio);
+        redirectAttributes.addFlashAttribute("aviso", "Episodio eliminado correctamente");
         return "redirect:/empleado/historiaClinica/" + idHistoria;
     }
 
     //Creador de la imagen qr
     @GetMapping("/crearQR/{id}")
-    public String crearQR(@PathVariable("id") Long id, Model model) {
+    public String crearQR(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
         HistoriaClinica historiaClinica = historiaClinicaServicio.findHistoriaClinicaById(id);
 
         if (historiaClinica == null) {
@@ -252,13 +270,12 @@ public class EmpleadoControlador {
 
         try {
             GeneradorQR.generarQR(textoQR, 300, 300, carpetaDescargas + File.separator + nombreArchivoQR);
-            model.addAttribute("mensaje", "QR generado exitosamente");
+            redirectAttributes.addFlashAttribute("aviso",  "QR generado exitosamente");
         } catch (WriterException | IOException e) {
-            model.addAttribute("error", "Error al generar el QR");
+            redirectAttributes.addFlashAttribute("aviso", "Error al generar el QR");
             return "redirect:/empleado/historiaClinica/" + id;
         }
 
-        // Redirigir de nuevo a la página de la historia clínica con el mensaje
         return "redirect:/empleado/historiaClinica/" + id;
     }
 
@@ -285,6 +302,11 @@ public class EmpleadoControlador {
 
         model.addAttribute("usuarios", usuarios);
         model.addAttribute("nombreUsuario", nombreUsuario);
+        if (model.containsAttribute("aviso")) {
+            String aviso = (String) model.getAttribute("aviso");
+            model.addAttribute("aviso", aviso);
+        }
+
         return "empleado/usuarios/index";
     }
 
@@ -302,7 +324,7 @@ public class EmpleadoControlador {
 
     // Procesar la edicion de un usuario
     @PostMapping("/usuarios/{correo}/editar")
-    public String editarUsuario(@PathVariable("correo") String correo, @ModelAttribute Usuario usuario) {
+    public String editarUsuario(@PathVariable("correo") String correo, @ModelAttribute Usuario usuario, RedirectAttributes redirectAttributes) {
         Usuario u = usuarioServicio.findByCorreo(correo);
         if (u == null) {
             return "redirect:/error/404";
@@ -320,13 +342,14 @@ public class EmpleadoControlador {
         usuario.setRol(rol);
 
         usuarioServicio.save(usuario);
+        redirectAttributes.addFlashAttribute("aviso", "Usuario actualizado correctamente");
         return "redirect:/empleado/usuarios";
     }
 
     // Eliminar un usuario
     @Transactional
     @GetMapping("/usuarios/{correo}/eliminar")
-    public String eliminarUsuario(@PathVariable("correo") String correo) {
+    public String eliminarUsuario(@PathVariable("correo") String correo, RedirectAttributes redirectAttributes) {
 
         Usuario usuario = usuarioServicio.findByCorreo(correo);
         if (usuario == null) {
@@ -338,6 +361,7 @@ public class EmpleadoControlador {
         }
 
         usuarioServicio.eliminarUsuario(usuario);
+        redirectAttributes.addFlashAttribute("aviso", "Usuario eliminado correctamente");
         return "redirect:/empleado/usuarios";
     }
 }
