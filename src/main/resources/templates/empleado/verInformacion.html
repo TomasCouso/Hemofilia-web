@@ -79,10 +79,10 @@
         <!-- Observaciones adicionales -->
         <div class="mt-6">
             <h2 class="text-xl font-bold mb-2">Observaciones</h2>
-            <div th:if="${episodios == null || episodios.isEmpty()}" class="text-gray-600">
+            <div th:if="${historiaClinica.observaciones == null || historiaClinica.observaciones.isEmpty()}" class="text-gray-600">
                 No hay observaciones realizadas.
             </div>
-            <p th:if="${episodios != null && !episodios.isEmpty()}" th:text="${historiaClinica.observaciones}"></p>
+            <p th:text="${historiaClinica.observaciones}"></p>
         </div>
 
     </div>
@@ -150,6 +150,17 @@
                     <button type="button"
                             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg">
                         Generar QR
+                    </button>
+                </a>
+            </div>
+
+            <!-- Editar-->
+            <div>
+                <a th:href="@{/empleado/historiaClinica/{numeroHistoriaClinica}/editar(numeroHistoriaClinica=${historiaClinica.numeroHistoriaClinica})}"
+                   class="flex-1">
+                    <button type="button"
+                            class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg">
+                        Editar
                     </button>
                 </a>
             </div>

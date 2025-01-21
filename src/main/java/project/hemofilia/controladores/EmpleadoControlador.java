@@ -206,7 +206,7 @@ public class EmpleadoControlador {
 
         HistoriaClinica h =historiaClinicaServicio.findHistoriaClinicaById(historiaClinicaId);
         Episodio e = episodioServicio.findEpisodioPorId(episodioId);
-        if (h == null || e != null) {
+        if (h == null || e == null) {
             return "redirect:/error/404";
         }
 
