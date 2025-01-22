@@ -1,26 +1,28 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Listado de Historias Clínicas</title>
+    <title>Usuarios</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="icon" th:href="@{/img/favicon.ico}">
+    <style>
+        html, body {
+            height: 100%;
+        }
+    </style>
 </head>
-<body class="bg-gray-100">
+<body class="bg-red-50 text-gray-900">
 
-<!-- Encabezado -->
-<header class="bg-blue-500 text-white py-4 px-12 flex items-center justify-between mb-6">
+<header class="bg-red-600 text-white py-4 px-12 flex items-center justify-between shadow-lg">
     <img th:src="@{/img/logo-hemo.png}" alt="Logo" class="h-11 max-w-full w-auto mr-6">
-    <h1 class="text-3xl font-bold mr-6">Usuarios</h1>
+    <h1 class="text-4xl font-bold text-center">Usuarios</h1>
     <a th:href="@{/empleado/historiasClinicas}"
-       class="inline-block px-6 py-2 text-white bg-blue-700 hover:bg-blue-900 rounded-md">
+       class="inline-block px-6 py-2 text-white bg-red-700 hover:bg-red-900 rounded-md shadow-md">
         Volver
     </a>
 </header>
 
-<div th:if="${usuarios != null || !usuarios.isEmpty()}" class="container mx-auto">
-    <!-- Aviso -->
+<main class="container mx-auto mt-10 px-4">
     <div th:if="${aviso}" class="bg-yellow-100 text-yellow-800 border-l-4 border-yellow-500 p-4 mb-4">
         <p th:text="${aviso}"></p>
     </div>
@@ -29,49 +31,54 @@
         <form th:action="@{/empleado/usuarios}" method="get" class="flex items-center space-x-4">
             <input type="text" name="nombreUsuario" placeholder="Buscar por nombre"
                    class="py-2 px-4 border rounded-lg" th:value="${nombreUsuario}">
-            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-lg">
+            <button type="submit" class="inline-block px-6 py-2 text-white bg-red-600 hover:bg-red-800 rounded-md shadow-md">
                 Buscar
             </button>
             <a th:href="@{/empleado/usuarios}"
-               class="inline-block px-6 py-2 text-white bg-blue-500 hover:bg-blue-700 rounded-md">
+               class="inline-block px-6 py-2 text-white bg-red-600 hover:bg-red-800 rounded-md shadow-md">
                 Limpiar
             </a>
         </form>
 
         <a th:href="@{/registrar}"
-           class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-lg inline-block text-center">
+           class="inline-block px-6 py-2 text-white bg-green-600 hover:bg-green-800 rounded-md shadow-md">
             Crear Usuario
         </a>
     </div>
 
     <div th:if="${error == null}">
-        <table class="min-w-full bg-white">
-            <thead>
+        <table class="table-auto w-full border-collapse border border-gray-300 shadow-md">
+            <thead class="bg-gray-200">
             <tr>
-                <th class="py-2 px-4 bg-gray-200 text-center">Nombre</th>
-                <th class="py-2 px-4 bg-gray-200 text-center">Correo</th>
-                <th class="py-2 px-4 bg-gray-200 text-center">Rol</th>
-                <th class="py-2 px-4 bg-gray-200 text-center">Acciones</th>
+                <th class="border border-gray-300 px-4 py-2 w-1/4">Nombre</th>
+                <th class="border border-gray-300 px-4 py-2 w-1/4">Correo</th>
+                <th class="border border-gray-300 px-4 py-2 w-1/4">Rol</th>
+                <th class="border border-gray-300 px-4 py-2 w-1/4">Acciones</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="usuario : ${usuarios}">
-                <td class="py-2 px-4 border-b border-gray-200 text-center" th:text="${usuario.nombre}"></td>
-                <td class="py-2 px-4 border-b border-gray-200 text-center" th:text="${usuario.correo}"></td>
-                <td class="py-2 px-4 border-b border-gray-200 text-center">
-                <span th:switch="${usuario.rol.nombre}">
-                    <span th:case="'ROLE_ADMIN'">Administrador</span>
-                    <span th:case="'ROLE_EMPLEADO'">Empleado</span>
-                </span>
+                <td class="border border-gray-300 px-4 py-2 text-center" th:text="${usuario.nombre}"></td>
+                <td class="border border-gray-300 px-4 py-2 text-center" th:text="${usuario.correo}"></td>
+                <td class="border border-gray-300 px-4 py-2 text-center">
+            <span th:switch="${usuario.rol.nombre}">
+                <span th:case="'ROLE_ADMIN'">Administrador</span>
+                <span th:case="'ROLE_EMPLEADO'">Empleado</span>
+            </span>
                 </td>
-                <td class="py-2 px-4 border-b border-gray-200 text-center">
-                    <div class="flex gap-4" th:if="${usuario.id != 1}">
-                        <a th:href="@{/empleado/usuarios/{correo}/editar(correo=${usuario.correo})}" class="flex-1">
-                            <button type="button" class="bg-blue-500 hover:bg-blue-700 text-white py-4 rounded-lg w-full h-16">Editar</button>
+                <td class="border border-gray-300 px-4 py-2 text-center">
+                    <div class="justify-center" th:if="${usuario.id != 1}">
+                        <a th:href="@{/empleado/usuarios/{correo}/editar(correo=${usuario.correo})}" class="flex-1 ml-2">
+                            <button type="button"
+                                    class="bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded shadow-md">Editar
+                            </button>
                         </a>
 
-                        <a th:href="@{/empleado/usuarios/{correo}/eliminar(correo=${usuario.correo})}" class="flex-1">
-                            <button type="button" class="bg-green-500 hover:bg-green-700 text-white py-4 rounded-lg w-full h-16">Eliminar</button>
+                        <a th:href="@{/empleado/usuarios/{correo}/eliminar(correo=${usuario.correo})}" class="flex-1 ml-2">
+                            <button type="button"
+                                    class="bg-red-600 hover:bg-red-800 text-white font-bold py-2 px-4 rounded shadow-md">
+                                Eliminar
+                            </button>
                         </a>
                     </div>
                 </td>
@@ -80,9 +87,9 @@
         </table>
     </div>
 
-</div>
-<div th:if="${error != null}" class="container mx-auto">
-    <p th:text="${error}"></p>
-</div>
+    <div th:if="${error != null}" class="bg-yellow-100 text-yellow-800 border-l-4 border-yellow-500 p-4 mb-4">
+        <p th:text="${error}"></p>
+    </div>
+</main>
 </body>
 </html>

@@ -3,17 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Detalle de Historia Clínica</title>
-    <!-- Incluir Tailwind CSS desde CDN -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="icon" th:href="@{/img/favicon.ico}">
     <style>
-        html, body {
-            height: 100%;
-        }
+        html, body {height: 100%;}
     </style>
 </head>
-<body class="bg-gray-50 text-gray-900">
-
+<body class="bg-red-50 text-gray-900">
 
 <header class="bg-red-600 text-white py-4 px-12 flex items-center justify-between shadow-lg">
     <img th:src="@{/img/logo-hemo.png}" alt="Logo" class="h-11 max-w-full w-auto mr-6">
@@ -23,9 +19,7 @@
     </a>
 </header>
 
-<!-- Contenido principal -->
 <main class="container mx-auto mt-10 px-4">
-    <!-- Aviso -->
     <div th:if="${aviso}" class="bg-yellow-100 text-yellow-800 border-l-4 border-yellow-500 p-4 mb-4">
         <p th:text="${aviso}"></p>
     </div>
@@ -62,12 +56,11 @@
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <!-- Estrategias terapéuticas -->
         <div class="mt-6 bg-white p-6 rounded-lg shadow-md border border-gray-200">
             <h2 class="text-xl font-bold mb-2">Estrategias Terapéuticas</h2>
             <p th:text="${historiaClinica.estrategiasTrapeuticas}"></p>
         </div>
-        <!-- Observaciones adicionales -->
+
         <div class="mt-6 bg-white p-6 rounded-lg shadow-md border border-gray-200">
             <h2 class="text-xl font-bold mb-2">Observaciones</h2>
             <div th:if="${historiaClinica.observaciones == null || historiaClinica.observaciones.isEmpty()}" class="text-gray-600">
@@ -77,14 +70,11 @@
         </div>
     </div>
 
-    <!-- Tabla de Episodios -->
     <div class="mt-8">
-
         <div class="flex justify-between items-center mb-4">
             <h2 class="text-xl font-bold mb-4">Episodios Asociados</h2>
-
             <a th:href="@{/empleado/historiaClinica/{historiaClinicaId}/episodio/nuevo(historiaClinicaId=${historiaClinica.numeroHistoriaClinica})}"
-               class="bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded-lg">
+               class="bg-green-600 hover:bg-green-800 text-white py-2 px-4 rounded-lg">
                 Asociar un episodio nuevo
             </a>
         </div>
@@ -108,12 +98,12 @@
                     <td class="border border-gray-300 px-4 py-2 text-center" th:text="${episodio.episodioEnCurso ? 'Sí' : 'No'}"></td>
                     <td class="border border-gray-300 px-4 py-2 gap-2 text-center">
                         <a th:href="@{/empleado/historiaClinica/{historiaClinicaId}/episodio/editar/{episodioId}(historiaClinicaId=${historiaClinica.numeroHistoriaClinica}, episodioId=${episodio.id})}">
-                            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-md">
+                            <button class="bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded shadow-md">
                                 Editar
                             </button>
                         </a>
                         <a th:href="@{/empleado/historiaClinica/{historiaClinicaId}/episodio/eliminar/{episodioId}(historiaClinicaId=${historiaClinica.numeroHistoriaClinica}, episodioId=${episodio.id})}">
-                            <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded shadow-md">
+                            <button class="bg-red-600 hover:bg-red-800 text-white font-bold py-2 px-4 rounded shadow-md">
                                 Eliminar
                             </button>
                         </a>
@@ -123,18 +113,16 @@
             </table>
         </div>
 
-        <!-- Mensaje si no hay episodios -->
         <div th:if="${episodios == null || episodios.isEmpty()}" class="text-gray-600">
             No hay episodios asociados a esta historia clínica.
         </div>
 
-        <!-- Botones -->
         <div class="mt-8 flex justify-between items-center">
             <div>
                 <a th:href="@{/empleado/crearQR/{id}(id=${historiaClinica.numeroHistoriaClinica})}"
                    onclick="return confirm('Se va a crear la imagen qr en la carpeta Descargas');">
                     <button type="button"
-                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg shadow-md">
+                            class="bg-green-600 hover:bg-green-800 text-white font-bold py-2 px-6 rounded-lg shadow-md">
                         Generar QR
                     </button>
                 </a>
@@ -144,7 +132,7 @@
                 <a th:href="@{/empleado/historiaClinica/{numeroHistoriaClinica}/editar(numeroHistoriaClinica=${historiaClinica.numeroHistoriaClinica})}"
                    class="flex-1">
                     <button type="button"
-                            class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg shadow-md">
+                            class="bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-6 rounded-lg shadow-md">
                         Editar
                     </button>
                 </a>
@@ -153,7 +141,7 @@
             <div>
                 <a th:href="@{/empleado/historiaClinica/eliminar/{id}(id=${historiaClinica.numeroHistoriaClinica})}"
                    onclick="return confirm('¿Estás seguro de eliminar esta Historia Clínica?');">
-                    <button type="button" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-6 rounded-lg shadow-md">
+                    <button type="button" class="bg-red-600 hover:bg-red-800 text-white font-bold py-2 px-6 rounded-lg shadow-md">
                         Eliminar Historia Clínica
                     </button>
                 </a>
