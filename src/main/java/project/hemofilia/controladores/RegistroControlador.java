@@ -86,6 +86,6 @@ public class RegistroControlador {
         usuarioServicio.save(usuario);
 
         redirectAttributes.addFlashAttribute("aviso", "Empleado registrado exitosamente");
-        return "redirect:/empleado/usuarios";
+        return "redirect:/usuarios/index";
     }
 }
