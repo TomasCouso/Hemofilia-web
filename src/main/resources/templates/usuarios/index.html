@@ -31,7 +31,8 @@
         <form th:action="@{/usuarios/index}" method="get" class="flex items-center space-x-4">
             <input type="text" name="nombreUsuario" placeholder="Buscar por nombre"
                    class="py-2 px-4 border rounded-lg" th:value="${nombreUsuario}">
-            <button type="submit" class="inline-block px-6 py-2 text-white bg-red-600 hover:bg-red-800 rounded-md shadow-md">
+            <button type="submit"
+                    class="inline-block px-6 py-2 text-white bg-red-600 hover:bg-red-800 rounded-md shadow-md">
                 Buscar
             </button>
             <a th:href="@{/usuarios/index}"
@@ -48,29 +49,30 @@
 
     <div th:if="${error == null}">
         <table class="table-auto w-full border-collapse border border-gray-300 shadow-md">
-            <thead class="bg-gray-200">
+            <thead class="bg-red-200">
             <tr>
-                <th class="border border-gray-300 px-4 py-2 w-1/4">Nombre</th>
-                <th class="border border-gray-300 px-4 py-2 w-1/4">Correo</th>
-                <th class="border border-gray-300 px-4 py-2 w-1/4">Rol</th>
-                <th class="border border-gray-300 px-4 py-2 w-1/4">Acciones</th>
+                <th class="border border-gray-400 px-4 py-2 w-1/4">Nombre</th>
+                <th class="border border-gray-400 px-4 py-2 w-1/4">Correo</th>
+                <th class="border border-gray-400 px-4 py-2 w-1/4">Rol</th>
+                <th class="border border-gray-400 px-4 py-2 w-1/4">Acciones</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody class="bg-red-100">
             <tr th:each="usuario : ${usuarios}">
-                <td class="border border-gray-300 px-4 py-2 text-center" th:text="${usuario.nombre}"></td>
-                <td class="border border-gray-300 px-4 py-2 text-center" th:text="${usuario.correo}"></td>
-                <td class="border border-gray-300 px-4 py-2 text-center">
+                <td class="border border-gray-400 px-4 py-2 text-center" th:text="${usuario.nombre}"></td>
+                <td class="border border-gray-400 px-4 py-2 text-center" th:text="${usuario.correo}"></td>
+                <td class="border border-gray-400 px-4 py-2 text-center">
             <span th:switch="${usuario.rol.nombre}">
                 <span th:case="'ROLE_ADMIN'">Administrador</span>
                 <span th:case="'ROLE_EMPLEADO'">Empleado</span>
             </span>
                 </td>
-                <td class="border border-gray-300 px-4 py-2 text-center">
+                <td class="border border-gray-400 px-4 py-2 text-center">
                     <div class="justify-center" th:if="${usuario.id != 1}">
                         <a th:href="@{/usuarios/{correo}/editar (correo=${usuario.correo})}" class="flex-1 ml-2">
                             <button type="button"
-                                    class="bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded shadow-md">Editar
+                                    class="bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded shadow-md">
+                                Editar
                             </button>
                         </a>
 
