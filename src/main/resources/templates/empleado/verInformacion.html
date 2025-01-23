@@ -38,7 +38,7 @@
                     th:text="${T(java.time.Period).between(historiaClinica.fechaNacimiento, T(java.time.LocalDate).now()).getYears()}"></span>
             </p>
             <p><strong>Fecha de Nacimiento:</strong> <span
-                    th:text="${#dates.format(historiaClinica.fechaNacimiento, 'dd-MM-yyyy')}"></span></p>
+                    th:text="${historiaClinica.fechaNacimiento}"></span></p>
             <p><strong>Sexo:</strong> <span th:text="${historiaClinica.sexo}"></span></p>
             <p><strong>Teléfono de Contacto:</strong> <span th:text="${historiaClinica.telefonoDeContacto}"></span></p>
         </div>
@@ -48,7 +48,7 @@
             <p><strong>Obra Social / Prepaga:</strong> <span th:text="${historiaClinica.obraSocial}"></span></p>
             <p><strong>Número de Afiliado:</strong> <span th:text="${historiaClinica.numeroDeAfiliado}"></span></p>
             <p><strong>Fecha de Diagnóstico:</strong> <span
-                    th:text="${#dates.format(historiaClinica.fechaDiagnostico, 'dd-MM-yyyy')}"></span></p>
+                    th:text="${historiaClinica.fechaDiagnostico}"></span></p>
             <p><strong>Tipo y severidad de Hemofilia:</strong> <span th:text="${historiaClinica.tipoHemofilia}"></span>
             </p>
             <p><strong>Tipo de Tratamiento:</strong> <span th:text="${historiaClinica.tipoDeTratamiento}"></span></p>
@@ -60,7 +60,7 @@
             <p><strong>Último Título:</strong> <span th:text="'<' + ${historiaClinica.ultimoTitulo} + ' UB/ml'"></span>
             </p>
             <p><strong>Fecha del Último Título:</strong> <span
-                    th:text="${#dates.format(historiaClinica.fechaUltimoTitulo, 'dd-MM-yyyy')}"></span>
+                    th:text="${historiaClinica.fechaUltimoTitulo}"></span>
             </p>
             <p><strong>Peso:</strong> <span th:text="${historiaClinica.peso} + 'Kg'"></span></p>
             <p><strong>Dosis:</strong> <span
@@ -111,7 +111,7 @@
                 <tbody class="bg-red-100">
                 <tr th:each="episodio : ${episodios}">
                     <td class="border border-gray-400 px-4 py-2 text-center"
-                        th:text="${#dates.format(episodio.fechaEpisodio, 'dd-MM-yyyy')}"></td>
+                        th:text="${episodio.fechaEpisodio}"></td>
                     <td class="border border-gray-400 px-4 py-2 text-center"
                         th:text="${episodio.episodioHemorragico}"></td>
                     <td class="border border-gray-400 px-4 py-2 text-center"
