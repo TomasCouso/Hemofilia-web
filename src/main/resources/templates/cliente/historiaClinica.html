@@ -11,15 +11,15 @@
         }
     </style>
 </head>
-<body class="flex flex-col min-h-screen bg-gray-100 text-gray-800">
+<body class="bg-red-50 text-gray-900">
 
-<header class="bg-blue-500 text-white py-5 w-full fixed top-0 left-0 z-10 flex items-center">
+<header class="bg-red-600 text-white py-4 px-12 flex items-center justify-between shadow-lg">
 
     <a th:href="@{/cliente/historiaClinica/{numeroHistoriaClinica}(numeroHistoriaClinica=${token})}" class="ml-5">
         <img th:src="@{/img/logo-hemo.png}" alt="Logo">
     </a>
 
-    <h1 class="text-5xl font-bold text-center flex-grow">Historia Clínica de <span th:text="${historiaClinica.nombre}"></span></h1>
+    <h1 class="text-4xl font-bold text-center flex-grow">Historia Clínica de <span th:text="${historiaClinica.nombre}"></span></h1>
 </header>
 
 <main class="flex-grow pt-48 px-4 text-center">
@@ -29,16 +29,16 @@
 
     <div class="flex gap-4 mt-60">
         <a th:href="@{/cliente/historiaClinica/{numeroHistoriaClinica}/info(numeroHistoriaClinica=${token})}" class="flex-1">
-            <button type="button" class="bg-blue-500 hover:bg-blue-700 text-white py-4 text-7xl rounded-lg w-full h-96">Información</button>
+            <button type="button" class="bg-blue-600 hover:bg-blue-800 text-white py-4 text-7xl rounded-lg w-full h-96">Información</button>
         </a>
 
         <a th:href="@{/cliente/historiaClinica/{numeroHistoriaClinica}/urgencia(numeroHistoriaClinica=${token})}" class="flex-1">
-            <button type="button" class="bg-red-500 hover:bg-red-700 text-white py-4 text-7xl rounded-lg w-full h-96">Urgencia</button>
+            <button type="button" class="bg-red-600 hover:bg-red-800 text-white py-4 text-7xl rounded-lg w-full h-96">Urgencia</button>
         </a>
     </div>
 </main>
 
-<footer class="bg-blue-500 text-white text-center py-6 fixed bottom-0 left-0 w-full">
+<footer class="bg-red-600 text-white text-center py-6 fixed bottom-0 left-0 w-full">
     <h2 class="text-2xl font-bold mb-2">Centro de Hemofilia</h2>
     <p class="text-lg"><strong>Dirección:</strong> Soler 3483, Buenos Aires, CABA</p>
     <p class="text-lg"><strong>Teléfono:</strong> 011 4963-1755</p>
