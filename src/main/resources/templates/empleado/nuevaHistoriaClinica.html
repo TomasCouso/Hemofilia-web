@@ -39,6 +39,7 @@
                 Historia Clínica</label>
             <input type="date" id="fechaHistoriaClinica" name="fechaHistoriaClinica"
                    th:value="*{fechaHistoriaClinica}"
+                   th:max="${T(java.time.LocalDate).now()}"
                    class="bg-red-200 mt-1 block w-full border-gray-300 rounded-md shadow-md" placeholder="dd-MM-yyyy"
                    required>
         </div>
@@ -84,6 +85,7 @@
             <label for="fechaNacimiento" class="block text-lg font-medium text-gray-700">Fecha de Nacimiento</label>
             <input type="date" id="fechaNacimiento" name="fechaNacimiento"
                    th:value="*{fechaNacimiento}"
+                   th:max="${T(java.time.LocalDate).now()}"
                    class="bg-red-200 mt-1 block w-full border-gray-300 rounded-md shadow-md" placeholder="dd-MM-yyyy"
                    required>
         </div>
@@ -106,6 +108,7 @@
             <label for="fechaDiagnostico" class="block text-lg font-medium text-gray-700">Fecha de Diagnóstico</label>
             <input type="date" id="fechaDiagnostico" name="fechaDiagnostico"
                    th:value="*{fechaDiagnostico}"
+                   th:max="${T(java.time.LocalDate).now()}"
                    class="bg-red-200 mt-1 block w-full border-gray-300 rounded-md shadow-md" placeholder="dd-MM-yyyy"
                    required>
         </div>
@@ -132,6 +135,7 @@
                 Tílulo</label>
             <input type="date" id="fechaUltimoTitulo" name="fechaUltimoTitulo"
                    th:value="*{fechaUltimoTitulo}"
+                   th:max="${T(java.time.LocalDate).now()}"
                    class="bg-red-200 mt-1 block w-full border-gray-300 rounded-md shadow-md" placeholder="dd-MM-yyyy"
                    required>
         </div>
