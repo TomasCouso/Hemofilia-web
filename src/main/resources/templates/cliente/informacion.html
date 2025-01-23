@@ -131,9 +131,11 @@
 
             <div class="flex items-center justify-between mb-4">
                 <h2 class="text-2xl font-semibold text-sm text-gray-900">Último Evento</h2>
-                <div th:if="${ultimoEpisodio.episodioEnCurso}"
-                     class="bg-red-500 text-white px-3 py-1 text-sm rounded-full">
-                    En curso
+                <div th:if="${!(ultimoEpisodio==null)}">
+                    <div th:if="${ultimoEpisodio.episodioEnCurso}"
+                         class="bg-red-500 text-white px-3 py-1 text-sm rounded-full">
+                        En curso
+                    </div>
                 </div>
             </div>
 
