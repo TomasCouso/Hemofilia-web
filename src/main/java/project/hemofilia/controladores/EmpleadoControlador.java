@@ -252,7 +252,7 @@ public class EmpleadoControlador {
         String token = tokenServicio.generarToken(id);
 
         // Crear el QR con el token generado
-        String textoQR = "http://192.168.1.8:8080/cliente/historiaClinica/" + token; // URL con el token
+        String textoQR = "http://192.168.0.10:8080/cliente/historiaClinica/" + token; // URL con el token
         String nombreArchivoQR = "qr_historia_" + id + ".png";
 
         // Obtener la ruta de la carpeta de descargas
