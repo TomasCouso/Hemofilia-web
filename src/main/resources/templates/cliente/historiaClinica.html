@@ -19,21 +19,29 @@
         <img th:src="@{/img/logo-hemo.png}" alt="Logo">
     </a>
 
-    <h1 class="text-4xl font-bold text-center flex-grow">Historia Clínica de <span th:text="${historiaClinica.nombre}"></span></h1>
+    <h1 class="text-4xl font-bold text-center flex-grow">Historia Clínica de <span
+            th:text="${historiaClinica.nombre}"></span></h1>
 </header>
 
 <main class="flex-grow pt-48 px-4 text-center">
     <p class="text-5xl mb-5">Documento: <span th:text="${historiaClinica.dni}"></span></p>
-    <p class="text-5xl mb-5">Número de Historia Clínica: <span th:text="${historiaClinica.numeroHistoriaClinica}"></span></p>
+    <p class="text-5xl mb-5">Número de Historia Clínica: <span
+            th:text="${historiaClinica.numeroHistoriaClinica}"></span></p>
     <p class="text-red-500 text-7xl font-bold mb-20">PACIENTE HEMOFILICO</p>
 
     <div class="flex gap-4 mt-60">
-        <a th:href="@{/cliente/historiaClinica/{numeroHistoriaClinica}/info(numeroHistoriaClinica=${token})}" class="flex-1">
-            <button type="button" class="bg-blue-600 hover:bg-blue-800 text-white py-4 text-7xl rounded-lg w-full h-96">Información</button>
+        <a th:href="@{/cliente/historiaClinica/{numeroHistoriaClinica}/info(numeroHistoriaClinica=${token})}"
+           class="flex-1">
+            <button type="button" class="bg-blue-600 hover:bg-blue-800 text-white py-4 text-7xl rounded-lg w-full h-96">
+                Información
+            </button>
         </a>
 
-        <a th:href="@{/cliente/historiaClinica/{numeroHistoriaClinica}/urgencia(numeroHistoriaClinica=${token})}" class="flex-1">
-            <button type="button" class="bg-red-600 hover:bg-red-800 text-white py-4 text-7xl rounded-lg w-full h-96">Urgencia</button>
+        <a th:href="@{/cliente/historiaClinica/{numeroHistoriaClinica}/urgencia(numeroHistoriaClinica=${token})}"
+           class="flex-1">
+            <button type="button" class="bg-red-600 hover:bg-red-800 text-white py-4 text-7xl rounded-lg w-full h-96">
+                Urgencia
+            </button>
         </a>
     </div>
 </main>

@@ -6,7 +6,9 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="icon" th:href="@{/img/favicon.ico}">
     <style>
-        html, body {height: 100%;}
+        html, body {
+            height: 100%;
+        }
     </style>
 </head>
 <body class="bg-red-50 text-gray-900">
@@ -15,33 +17,41 @@
     <img th:src="@{/img/logo-hemo.png}" alt="Logo" class="h-11 max-w-full w-auto mr-6">
     <h1 class="text-4xl font-bold text-center">Editar Usuario</h1>
     <div class="flex space-x-4">
-        <a th:href="@{/empleado/usuarios/index}" class="inline-block px-6 py-2 text-white bg-red-700 hover:bg-red-900 rounded-md shadow-md">
+        <a th:href="@{/empleado/usuarios/index}"
+           class="inline-block px-6 py-2 text-white bg-red-700 hover:bg-red-900 rounded-md shadow-md">
             Volver
         </a>
-        <a th:href="@{/empleado/historiasClinicas}" class="inline-block px-6 py-2 text-white bg-red-700 hover:bg-red-900 rounded-md shadow-md">
+        <a th:href="@{/empleado/historiasClinicas}"
+           class="inline-block px-6 py-2 text-white bg-red-700 hover:bg-red-900 rounded-md shadow-md">
             Inicio
         </a>
     </div>
 </header>
 
 <main class="container mx-auto mt-10 px-4">
-    <form th:action="@{/usuarios/{correo}/editar (correo=${correo})}" th:object="${usuario}" method="post" class="bg-red-100 p-8 shadow-md rounded-lg max-w-3xl mx-auto border border-gray-200">
+    <form th:action="@{/usuarios/{correo}/editar (correo=${correo})}" th:object="${usuario}" method="post"
+          class="bg-red-100 p-8 shadow-md rounded-lg max-w-3xl mx-auto border border-gray-200">
 
         <div class="mb-4">
             <label for="nombre" class="block text-lg font-medium text-gray-700">Nombre</label>
-            <input type="text" id="nombre" name="nombre" th:value="*{nombre}" class="bg-red-200 mt-1 block w-full border-gray-300 rounded-md shadow-md">
+            <input type="text" id="nombre" name="nombre" th:value="*{nombre}"
+                   class="bg-red-200 mt-1 block w-full border-gray-300 rounded-md shadow-md">
         </div>
 
         <div class="mb-4">
             <label for="rol" class="block text-lg font-medium text-gray-700">Rol</label>
-            <select id="rol" name="rol" th:field="*{rol.nombre}" class="bg-red-200 mt-1 block w-full border-gray-300 rounded-md shadow-md" required>
+            <select id="rol" name="rol" th:field="*{rol.nombre}"
+                    class="bg-red-200 mt-1 block w-full border-gray-300 rounded-md shadow-md" required>
                 <option value="ROLE_ADMIN">Administrador</option>
                 <option value="ROLE_EMPLEADO">Empleado</option>
             </select>
         </div>
 
         <div class="mt-6 flex justify-center">
-            <button type="submit" class="inline-block px-6 py-2 text-white bg-red-600 hover:bg-red-800 rounded-md shadow-md">Guardar Cambios</button>
+            <button type="submit"
+                    class="inline-block px-6 py-2 text-white bg-red-600 hover:bg-red-800 rounded-md shadow-md">Guardar
+                Cambios
+            </button>
         </div>
     </form>
 </main>
