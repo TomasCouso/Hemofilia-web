@@ -38,8 +38,8 @@
             <label for="fechaHistoriaClinica" class="block text-lg font-medium text-gray-700">Fecha de creacion de
                 Historia Clínica</label>
             <input type="date" id="fechaHistoriaClinica" name="fechaHistoriaClinica"
-                   th:value="*{fechaHistoriaClinica}"
-                   class="bg-red-200 mt-1 block w-full border-gray-300 rounded-md shadow-md" placeholder="yyyy-MM-dd"
+                   th:value="*{#dates.format(fechaHistoriaClinica, 'dd-MM-yyyy')}"
+                   class="bg-red-200 mt-1 block w-full border-gray-300 rounded-md shadow-md" placeholder="dd-MM-yyyy"
                    required>
         </div>
 
@@ -83,8 +83,8 @@
         <div class="mb-4">
             <label for="fechaNacimiento" class="block text-lg font-medium text-gray-700">Fecha de Nacimiento</label>
             <input type="date" id="fechaNacimiento" name="fechaNacimiento"
-                   th:value="*{fechaNacimiento}"
-                   class="bg-red-200 mt-1 block w-full border-gray-300 rounded-md shadow-md" placeholder="yyyy-MM-dd"
+                   th:value="*{#dates.format(fechaNacimiento, 'dd-MM-yyyy')}"
+                   class="bg-red-200 mt-1 block w-full border-gray-300 rounded-md shadow-md" placeholder="dd-MM-yyyy"
                    required>
         </div>
 
@@ -105,8 +105,8 @@
         <div class="mb-4">
             <label for="fechaDiagnostico" class="block text-lg font-medium text-gray-700">Fecha de Diagnóstico</label>
             <input type="date" id="fechaDiagnostico" name="fechaDiagnostico"
-                   th:value="*{fechaDiagnostico}"
-                   class="bg-red-200 mt-1 block w-full border-gray-300 rounded-md shadow-md" placeholder="yyyy-MM-dd"
+                   th:value="*{#dates.format(fechaDiagnostico, 'dd-MM-yyyy')}"
+                   class="bg-red-200 mt-1 block w-full border-gray-300 rounded-md shadow-md" placeholder="dd-MM-yyyy"
                    required>
         </div>
 
@@ -131,8 +131,8 @@
             <label for="fechaUltimoTitulo" class="block text-lg font-medium text-gray-700">Fecha de Ultimo
                 Tílulo</label>
             <input type="date" id="fechaUltimoTitulo" name="fechaUltimoTitulo"
-                   th:value="*{fechaUltimoTitulo}"
-                   class="bg-red-200 mt-1 block w-full border-gray-300 rounded-md shadow-md" placeholder="yyyy-MM-dd"
+                   th:value="*{#dates.format(fechaUltimoTitulo, 'dd-MM-yyyy')}"
+                   class="bg-red-200 mt-1 block w-full border-gray-300 rounded-md shadow-md" placeholder="dd-MM-yyyy"
                    required>
         </div>
 
