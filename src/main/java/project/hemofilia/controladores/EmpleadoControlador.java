@@ -2,6 +2,7 @@ package project.hemofilia.controladores;
 
 import com.google.zxing.WriterException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Controller;
@@ -32,6 +33,9 @@ public class EmpleadoControlador {
 
     @Autowired
     private TokenServicio tokenServicio;
+
+    @Value("${url.qr}")
+    private String urlQr;
 
     // Página inicial del empleado: lista de todas las historias clínicas
     // hay que agregar busqueda
@@ -252,7 +256,7 @@ public class EmpleadoControlador {
         String token = tokenServicio.generarToken(id);
 
         // Crear el QR con el token generado
-        String textoQR = "http://192.168.0.10:8080/cliente/historiaClinica/" + token; // URL con el token
+        String textoQR = urlQr + token; // URL con el token
         String nombreArchivoQR = "qr_historia_" + id + ".png";
 
         // Obtener la ruta de la carpeta de descargas

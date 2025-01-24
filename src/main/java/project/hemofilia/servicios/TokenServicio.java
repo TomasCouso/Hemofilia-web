@@ -2,18 +2,27 @@ package project.hemofilia.servicios;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
-import org.springframework.stereotype.Service;
+import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
 
 import javax.crypto.SecretKey;
 import java.security.Key;
 import java.time.Instant;
 import java.util.Date;
 
-@Service
+@Configuration
 public class TokenServicio {
 
-    // Utiliza una clave secreta segura generada con 'Keys.hmacShaKeyFor'
-    private static final Key SECRET_KEY = Keys.hmacShaKeyFor("miClaveSecretaSeguraQueDebeSerDeAlMenos32Caracteres".getBytes());
+    @Value("${jwt.secret}")
+    private String jwtSecret;
+
+    private static Key SECRET_KEY;
+
+    @PostConstruct
+    public void init() {
+        SECRET_KEY = Keys.hmacShaKeyFor(jwtSecret.getBytes());
+    }
 
     public String generarToken(Long idCliente) {
         return Jwts.builder()
