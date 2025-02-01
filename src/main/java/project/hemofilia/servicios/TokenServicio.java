@@ -27,6 +27,7 @@ public class TokenServicio {
     public String generarToken(Long idCliente) {
         return Jwts.builder()
                 .subject(idCliente.toString())
+                .expiration(Date.from(Instant.now().plusSeconds(31536000)))  // 1 año de duración
                 .issuedAt(Date.from(Instant.now()))  // Fecha de emisión del token
                 .signWith(SECRET_KEY)
                 .compact();
