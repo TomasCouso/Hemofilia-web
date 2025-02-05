@@ -3,6 +3,10 @@ package project.hemofilia.controladores;
 import com.google.zxing.WriterException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Controller;
@@ -15,6 +19,7 @@ import project.hemofilia.entidades.HistoriaClinica;
 import project.hemofilia.servicios.*;
 import project.hemofilia.utils.GeneradorQR;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
@@ -245,11 +250,11 @@ public class EmpleadoControlador {
 
     //Creador de la imagen qr
     @GetMapping("/crearQR/{id}")
-    public String crearQR(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
+    public ResponseEntity<byte[]> crearQR(@PathVariable("id") Long id) {
         HistoriaClinica historiaClinica = historiaClinicaServicio.findHistoriaClinicaById(id);
 
         if (historiaClinica == null) {
-            return "redirect:/error/404";
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
 
         // Generar token con el id de la historia clínica
@@ -257,19 +262,24 @@ public class EmpleadoControlador {
 
         // Crear el QR con el token generado
         String textoQR = urlQr + token; // URL con el token
-        String nombreArchivoQR = "qr_historia_" + id + ".png";
 
-        // Obtener la ruta de la carpeta de descargas
-        String carpetaDescargas = System.getProperty("user.home") + File.separator + "Downloads";
+        // Crear el archivo QR en memoria
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
         try {
-            GeneradorQR.generarQR(textoQR, 300, 300, carpetaDescargas + File.separator + nombreArchivoQR);
-            redirectAttributes.addFlashAttribute("aviso",  "QR generado exitosamente");
+            // Generar el QR y escribirlo en el ByteArrayOutputStream
+            GeneradorQR.generarQR(textoQR, 300, 300, byteArrayOutputStream);
         } catch (WriterException | IOException e) {
-            redirectAttributes.addFlashAttribute("aviso", "Error al generar el QR");
-            return "redirect:/empleado/historiaClinica/" + id;
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
 
-        return "redirect:/empleado/historiaClinica/" + id;
+        // Devolver el QR como una respuesta HTTP (el navegador lo descargará)
+        byte[] qrBytes = byteArrayOutputStream.toByteArray();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_PNG);
+        headers.setContentDispositionFormData("attachment", "qr_historia_" + id + ".png");
+
+        return new ResponseEntity<>(qrBytes, headers, HttpStatus.OK);
     }
 }
